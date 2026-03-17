@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Контакти - Пчелна ферма "Златен кошер"</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Lora', serif; color: #3E2723; background: #FFF8E1; }
+        a { text-decoration: none; color: inherit; }
+        h1, h2, h3, h4 { font-family: 'Amatic SC', cursive; }
+        nav { background: #3E2723; position: sticky; top: 0; z-index: 1000; }
+        .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; }
+        .nav-logo { font-family: 'Amatic SC', cursive; font-size: 1.8rem; color: #F0A500; padding: 15px 0; font-weight: 700; }
+        .nav-links { display: flex; list-style: none; gap: 5px; }
+        .nav-links a { color: #FFF8E1; padding: 20px 15px; display: block; font-size: 0.95rem; transition: background 0.3s, color 0.3s; }
+        .nav-links a:hover, .nav-links a.active { background: #F0A500; color: #3E2723; }
+        .menu-toggle { display: none; background: none; border: none; color: #F0A500; font-size: 1.8rem; cursor: pointer; }
+        @media (max-width: 768px) {
+            .menu-toggle { display: block; }
+            .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: #3E2723; }
+            .nav-links.open { display: flex; }
+            .nav-links a { padding: 15px 20px; border-top: 1px solid #5D4037; }
+        }
+        .page-header { background: linear-gradient(rgba(62,39,35,0.6), rgba(62,39,35,0.75)),
+            url('https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?w=1400&q=80') center/cover no-repeat;
+            padding: 100px 20px 60px; text-align: center; color: #FFF8E1; }
+        .page-header h1 { font-size: clamp(2.8rem, 7vw, 4.5rem); margin-bottom: 10px; animation: fadeInUp 1s ease; }
+        .page-header p { font-size: 1.1rem; opacity: 0.9; animation: fadeInUp 1s ease 0.2s both; }
+        section { padding: 60px 20px; }
+        .container { max-width: 1100px; margin: 0 auto; }
+        .section-title { font-size: 3rem; text-align: center; margin-bottom: 40px; }
+        /* Contact Layout */
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+        @media (max-width: 768px) { .contact-grid { grid-template-columns: 1fr; } }
+        /* Form */
+        .contact-form { background: white; padding: 35px; border-radius: 15px; box-shadow: 0 6px 25px rgba(62,39,35,0.12); }
+        .contact-form h2 { font-size: 2.5rem; margin-bottom: 20px; color: #3E2723; }
+        .form-group { margin-bottom: 18px; }
+        .form-group label { display: block; margin-bottom: 6px; font-size: 0.9rem; color: #5D4037; font-weight: 700; }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%; padding: 12px 16px; border: 2px solid #e0d5c7; border-radius: 8px; font-family: 'Lora', serif;
+            font-size: 0.95rem; color: #3E2723; background: #FFF8E1; transition: border-color 0.3s, box-shadow 0.3s; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none; border-color: #F0A500; box-shadow: 0 0 0 3px rgba(240,165,0,0.15); }
+        .form-group textarea { height: 130px; resize: vertical; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        @media (max-width: 500px) { .form-row { grid-template-columns: 1fr; } }
+        .submit-btn { width: 100%; padding: 14px; background: #F0A500; color: #3E2723; border: none; border-radius: 8px;
+            font-family: 'Lora', serif; font-size: 1rem; font-weight: 700; cursor: pointer; transition: all 0.3s; }
+        .submit-btn:hover { background: #D4931A; transform: translateY(-2px); box-shadow: 0 4px 15px rgba(240,165,0,0.3); }
+        /* Contact Info */
+        .contact-info h2 { font-size: 2.5rem; margin-bottom: 20px; }
+        .info-card { background: white; padding: 22px; border-radius: 12px; margin-bottom: 18px;
+            box-shadow: 0 3px 12px rgba(62,39,35,0.08); display: flex; align-items: flex-start; gap: 15px;
+            transition: transform 0.3s; }
+        .info-card:hover { transform: translateX(5px); }
+        .info-icon { font-size: 1.8rem; min-width: 40px; text-align: center; color: #F0A500; }
+        .info-card h3 { font-size: 1.5rem; margin-bottom: 4px; }
+        .info-card p { font-size: 0.9rem; color: #5D4037; line-height: 1.5; }
+        .info-card a { color: #D4931A; }
+        .info-card a:hover { text-decoration: underline; }
+        /* Working hours */
+        .hours-table { width: 100%; font-size: 0.9rem; margin-top: 8px; }
+        .hours-table td { padding: 4px 0; color: #5D4037; }
+        .hours-table td:last-child { text-align: right; font-weight: 700; color: #3E2723; }
+        /* FAQ */
+        .faq-list { max-width: 750px; margin: 0 auto; }
+        .faq-item { background: #FFF8E1; padding: 22px 25px; border-radius: 10px; margin-bottom: 15px;
+            border-left: 4px solid #F0A500; transition: transform 0.3s; }
+        .faq-item:hover { transform: translateX(5px); }
+        .faq-item h3 { font-size: 1.6rem; color: #3E2723; margin-bottom: 8px; }
+        .faq-item p { font-size: 0.9rem; color: #5D4037; line-height: 1.6; }
+        /* Map */
+        .map-section { background: #3E2723; padding: 50px 20px; }
+        .map-section h2 { font-family: 'Amatic SC', cursive; font-size: 3rem; color: #F0A500; text-align: center; margin-bottom: 25px; }
+        .map-wrapper { max-width: 1100px; margin: 0 auto; border-radius: 15px; overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.3); }
+        .map-wrapper iframe { width: 100%; height: 400px; border: none; }
+        /* Footer */
+        footer { background: #3E2723; color: #FFF8E1; padding: 40px 20px; }
+        .footer-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 30px; }
+        .footer-col h4 { font-family: 'Amatic SC', cursive; font-size: 1.8rem; color: #F0A500; margin-bottom: 12px; }
+        .footer-col p, .footer-col a { font-size: 0.9rem; line-height: 1.8; color: #FFF8E1; opacity: 0.8; display: block; }
+        .footer-col a:hover { opacity: 1; color: #F0A500; }
+        .social-icons { display: flex; gap: 12px; margin-top: 10px; }
+        .social-icons span { width: 38px; height: 38px; border-radius: 50%; border: 1px solid #F0A500; display: flex; align-items: center;
+            justify-content: center; font-size: 0.8rem; color: #F0A500; transition: all 0.3s; cursor: pointer; }
+        .social-icons span:hover { background: #F0A500; color: #3E2723; }
+        .footer-bottom { text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #5D4037; font-size: 0.85rem; opacity: 0.7; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in { opacity: 0; transform: translateY(25px); transition: opacity 0.8s ease, transform 0.8s ease; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">&#127855; Златен кошер</a>
+            <button class="menu-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">&#9776;</button>
+            <ul class="nav-links">
+                <li><a href="index.html">Начало</a></li>
+                <li><a href="about.html">За стопанството</a></li>
+                <li><a href="products.html">Продукция</a></li>
+                <li><a href="gallery.html">Галерия</a></li>
+                <li><a href="contact.html" class="active">Контакти</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="page-header">
+        <h1>Контакти</h1>
+        <p>Свържете се с нас за поръчки, въпроси или сътрудничество</p>
+    </div>
+    <section>
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-form fade-in">
+                    <h2>Направете запитване</h2>
+                    <form action="#" method="POST">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name">Име *</label>
+                                <input type="text" id="name" name="name" placeholder="Вашето име" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Телефон</label>
+                                <input type="tel" id="phone" name="phone" placeholder="+359 888 000 000">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" name="email" placeholder="vashiat@email.bg" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="inquiry">Тип запитване</label>
+                            <select id="inquiry" name="inquiry">
+                                <option value="" disabled selected>Изберете тип запитване</option>
+                                <option value="order">Поръчка</option>
+                                <option value="question">Въпрос</option>
+                                <option value="collaboration">Сътрудничество</option>
+                                <option value="other">Друго</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Съобщение *</label>
+                            <textarea id="message" name="message" placeholder="Напишете вашето съобщение тук..." required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Изпратете запитване</button>
+                    </form>
+                </div>
+                <div class="contact-info fade-in">
+                    <h2>Информация за контакт</h2>
+                    <div class="info-card">
+                        <div class="info-icon">&#128205;</div>
+                        <div><h3>Адрес</h3><p>с. Боженци, общ. Габрово<br>Област Габрово, 5349<br>България</p></div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">&#128222;</div>
+                        <div><h3>Телефон</h3><p><a href="tel:+359888123456">+359 888 123 456</a><br><a href="tel:+359666812345">+359 66 681 2345</a></p></div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">&#9993;</div>
+                        <div><h3>Email</h3><p><a href="mailto:info@zlatenkosher.bg">info@zlatenkosher.bg</a><br><a href="mailto:orders@zlatenkosher.bg">orders@zlatenkosher.bg</a></p></div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">&#128336;</div>
+                        <div>
+                            <h3>Работно време</h3>
+                            <table class="hours-table">
+                                <tr><td>Понеделник - Петък</td><td>08:00 - 18:00</td></tr>
+                                <tr><td>Събота</td><td>09:00 - 15:00</td></tr>
+                                <tr><td>Неделя</td><td>Почивен ден</td></tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">&#128663;</div>
+                        <div><h3>Доставки</h3><p>Изпращаме в цяла България с Еконт и Спиди. Безплатна доставка при поръчка над 80 лв.</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section style="background: white;">
+        <div class="container">
+            <h2 class="section-title">Често задавани въпроси</h2>
+            <div class="faq-list fade-in">
+                <div class="faq-item">
+                    <h3>Как мога да направя поръчка?</h3>
+                    <p>Попълнете формата за запитване на тази страница, изпратете ни имейл или се обадете по телефона. Ще ви отговорим до 24 часа.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Каква е минималната поръчка?</h3>
+                    <p>Няма минимална поръчка. Можете да поръчате дори само един буркан мед. При поръчка над 80 лв. доставката е безплатна.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Как се доставя медът?</h3>
+                    <p>Работим с Еконт и Спиди. Доставката е до офис или до адрес. Обикновено получавате пратката за 1-3 работни дни.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Мога ли да посетя пчелина?</h3>
+                    <p>Да! Организираме посещения за групи и индивидуални гости по предварителна уговорка. Свържете се с нас за повече информация.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="map-section">
+        <h2>Къде се намираме</h2>
+        <div class="map-wrapper">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d23456.789!2d25.4833!3d42.8333!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40a91f5b4e92e5ed%3A0x400a01269bf4e30!2z0JPQsNCx0YDQvtCy0L4!5e0!3m2!1sbg!2sbg!4v1700000000000!5m2!1sbg!2sbg"
+                allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+    </div>
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>Златен кошер</h4>
+                <p>Семейна пчелна ферма от 1992 г. Натурален мед и пчелни продукти от сърцето на България.</p>
+                <div class="social-icons"><span>FB</span><span>IG</span><span>YT</span></div>
+            </div>
+            <div class="footer-col">
+                <h4>Навигация</h4>
+                <a href="index.html">Начало</a><a href="about.html">За стопанството</a>
+                <a href="products.html">Продукция</a><a href="gallery.html">Галерия</a><a href="contact.html">Контакти</a>
+            </div>
+            <div class="footer-col">
+                <h4>Контакти</h4>
+                <p>с. Боженци, общ. Габрово</p><p>Тел: +359 888 123 456</p><p>Email: info@zlatenkosher.bg</p>
+                <p>Работно време: Пон-Съб 8:00-18:00</p>
+            </div>
+        </div>
+        <div class="footer-bottom">&copy; 2026 Пчелна ферма "Златен кошер". Всички права запазени.</div>
+    </footer>
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+        }, { threshold: 0.15 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Галерия - Лавандула БГ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Infant:wght@300;400;600;700&family=Mulish:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Mulish', sans-serif; color: #311B92; background: #FFFDE7; }
+        h1, h2, h3, h4 { font-family: 'Cormorant Infant', serif; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes zoomIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+        .fade-in { animation: fadeInUp 1s ease forwards; opacity: 0; }
+        .fade-in-d1 { animation-delay: 0.1s; }
+        .fade-in-d2 { animation-delay: 0.2s; }
+        .fade-in-d3 { animation-delay: 0.3s; }
+        nav { position: fixed; top: 0; width: 100%; z-index: 1000; background: rgba(49,27,146,0.92); backdrop-filter: blur(8px); padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; height: 70px; animation: slideDown 0.8s ease; }
+        .logo { font-family: 'Cormorant Infant', serif; font-size: 1.6rem; color: #FFF8E1; font-weight: 700; text-decoration: none; }
+        .logo span { color: #CE93D8; }
+        .nav-links { list-style: none; display: flex; gap: 1.8rem; }
+        .nav-links a { color: #FFF8E1; text-decoration: none; font-size: 0.95rem; transition: color 0.3s; position: relative; }
+        .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: #CE93D8; transition: width 0.3s; }
+        .nav-links a:hover { color: #CE93D8; }
+        .nav-links a:hover::after { width: 100%; }
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+        .hamburger span { width: 28px; height: 2px; background: #FFF8E1; transition: 0.3s; }
+        .page-hero { height: 50vh; background: linear-gradient(rgba(49,27,146,0.4), rgba(106,27,154,0.55)), url('https://images.unsplash.com/photo-1499002238440-d264edd596ec?w=1600&q=80') center/cover no-repeat; display: flex; align-items: center; justify-content: center; text-align: center; color: #FFF8E1; }
+        .page-hero h1 { font-size: 3.5rem; animation: fadeInUp 1s ease; }
+        .page-hero p { font-size: 1.2rem; margin-top: 0.8rem; font-weight: 300; animation: fadeInUp 1s ease 0.3s forwards; opacity: 0; }
+        .section { padding: 5rem 2rem; max-width: 1200px; margin: 0 auto; }
+        .section-title { text-align: center; font-size: 2.6rem; color: #6A1B9A; margin-bottom: 1rem; }
+        .section-sub { text-align: center; color: #8E24AA; font-size: 1.05rem; max-width: 650px; margin: 0 auto 3rem; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem; }
+        .gallery-item { position: relative; border-radius: 16px; overflow: hidden; cursor: pointer; aspect-ratio: 1; box-shadow: 0 4px 20px rgba(106,27,154,0.12); }
+        .gallery-item.wide { grid-column: span 2; aspect-ratio: 2/1; }
+        .gallery-item.tall { grid-row: span 2; aspect-ratio: 1/2; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s, filter 0.4s; }
+        .gallery-item:hover img { transform: scale(1.1); filter: brightness(0.85); }
+        .gallery-overlay { position: absolute; inset: 0; background: linear-gradient(transparent 50%, rgba(49,27,146,0.8)); display: flex; align-items: flex-end; padding: 1.5rem; opacity: 0; transition: opacity 0.4s; }
+        .gallery-item:hover .gallery-overlay { opacity: 1; }
+        .gallery-overlay h3 { color: #FFF8E1; font-size: 1.2rem; }
+        .gallery-overlay p { color: #E1BEE7; font-size: 0.85rem; margin-top: 0.3rem; }
+        .lightbox { display: none; position: fixed; inset: 0; z-index: 2000; background: rgba(26,10,62,0.95); align-items: center; justify-content: center; animation: fadeIn 0.3s ease; }
+        .lightbox.active { display: flex; }
+        .lightbox-content { max-width: 90vw; max-height: 85vh; border-radius: 12px; animation: zoomIn 0.4s ease; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+        .lightbox-close { position: absolute; top: 2rem; right: 2rem; width: 50px; height: 50px; border-radius: 50%; border: 2px solid #CE93D8; background: transparent; color: #CE93D8; font-size: 1.5rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
+        .lightbox-close:hover { background: #CE93D8; color: #1A0A3E; }
+        .lightbox-caption { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); color: #E1BEE7; text-align: center; font-family: 'Cormorant Infant', serif; font-size: 1.4rem; }
+        .lightbox-nav { position: absolute; top: 50%; transform: translateY(-50%); width: 50px; height: 50px; border-radius: 50%; border: 2px solid #CE93D8; background: transparent; color: #CE93D8; font-size: 1.5rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
+        .lightbox-nav:hover { background: #CE93D8; color: #1A0A3E; }
+        .lightbox-prev { left: 2rem; }
+        .lightbox-next { right: 2rem; }
+        .quote-section { background: linear-gradient(135deg, #311B92, #6A1B9A); padding: 4rem 2rem; text-align: center; color: #FFF8E1; }
+        .quote-section blockquote { font-family: 'Cormorant Infant', serif; font-size: 2rem; font-style: italic; max-width: 800px; margin: 0 auto 1rem; line-height: 1.5; color: #E1BEE7; }
+        .quote-section cite { color: #CE93D8; font-size: 1rem; }
+        footer { background: #1A0A3E; color: #E1BEE7; padding: 3rem 2rem 1.5rem; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2rem; max-width: 1200px; margin: 0 auto 2rem; }
+        .footer-brand h3 { font-family: 'Cormorant Infant', serif; font-size: 1.8rem; color: #CE93D8; margin-bottom: 0.8rem; }
+        .footer-brand p { font-size: 0.9rem; line-height: 1.7; color: #B39DDB; }
+        footer h4 { color: #CE93D8; font-size: 1.1rem; margin-bottom: 1rem; font-family: 'Cormorant Infant', serif; }
+        footer ul { list-style: none; }
+        footer ul li { margin-bottom: 0.6rem; }
+        footer ul a { color: #B39DDB; text-decoration: none; font-size: 0.9rem; transition: color 0.3s; }
+        footer ul a:hover { color: #FFF8E1; }
+        .social-links { display: flex; gap: 1rem; margin-top: 1rem; }
+        .social-links a { width: 40px; height: 40px; border-radius: 50%; border: 1px solid #CE93D8; display: flex; align-items: center; justify-content: center; color: #CE93D8; text-decoration: none; font-size: 0.85rem; transition: all 0.3s; }
+        .social-links a:hover { background: #CE93D8; color: #1A0A3E; }
+        .footer-bottom { text-align: center; padding-top: 1.5rem; border-top: 1px solid rgba(206,147,216,0.2); font-size: 0.85rem; color: #7E57C2; max-width: 1200px; margin: 0 auto; }
+        @media (max-width: 768px) {
+            .hamburger { display: flex; }
+            .nav-links { display: none; position: absolute; top: 70px; left: 0; width: 100%; background: rgba(49,27,146,0.97); flex-direction: column; padding: 2rem; gap: 1.2rem; }
+            .nav-links.active { display: flex; }
+            .page-hero h1 { font-size: 2.2rem; }
+            .gallery-grid { grid-template-columns: 1fr 1fr; }
+            .gallery-item.wide { grid-column: span 2; }
+            .gallery-item.tall { grid-row: span 1; aspect-ratio: 1; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+            .lightbox-nav { width: 40px; height: 40px; font-size: 1.2rem; }
+            .lightbox-prev { left: 0.5rem; }
+            .lightbox-next { right: 0.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo">Лавандула<span>БГ</span></a>
+        <div class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('active')">
+            <span></span><span></span><span></span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Начало</a></li>
+            <li><a href="about.html">За стопанството</a></li>
+            <li><a href="products.html">Продукция</a></li>
+            <li><a href="gallery.html">Галерия</a></li>
+            <li><a href="contact.html">Контакти</a></li>
+        </ul>
+    </nav>
+
+    <section class="page-hero">
+        <div>
+            <h1>Галерия</h1>
+            <p>Моменти от нашата лавандулова ферма през обектива</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title fade-in">Лавандулови моменти</h2>
+        <p class="section-sub fade-in fade-in-d1">Разгледайте снимки от нашите полета, процеса на дестилация и готовите продукти</p>
+        <div class="gallery-grid">
+            <div class="gallery-item wide fade-in" onclick="openLightbox(0)">
+                <img src="https://images.unsplash.com/photo-1499002238440-d264edd596ec?w=800&q=80" alt="Лавандулово поле панорама">
+                <div class="gallery-overlay"><div><h3>Лавандулови полета</h3><p>Панорамна гледка към цъфтящите полета</p></div></div>
+            </div>
+            <div class="gallery-item fade-in fade-in-d1" onclick="openLightbox(1)">
+                <img src="https://images.unsplash.com/photo-1563910431434-5c72adbb90dd?w=600&q=80" alt="Близък план лавандула">
+                <div class="gallery-overlay"><div><h3>Цъфтяща лавандула</h3><p>Близък план на цветовете</p></div></div>
+            </div>
+            <div class="gallery-item fade-in fade-in-d2" onclick="openLightbox(2)">
+                <img src="https://images.unsplash.com/photo-1468581264429-2548ef9eb732?w=600&q=80" alt="Залез над лавандула">
+                <div class="gallery-overlay"><div><h3>Залез над полето</h3><p>Магически залез в лилаво и златно</p></div></div>
+            </div>
+            <div class="gallery-item tall fade-in" onclick="openLightbox(3)">
+                <img src="https://images.unsplash.com/photo-1530099486328-e021101a494a?w=600&q=80" alt="Лавандулов букет">
+                <div class="gallery-overlay"><div><h3>Лавандулов букет</h3><p>Пресно откъснати стръкове</p></div></div>
+            </div>
+            <div class="gallery-item fade-in fade-in-d1" onclick="openLightbox(4)">
+                <img src="https://images.unsplash.com/photo-1611925091688-bc1648322284?w=600&q=80" alt="Етерично масло">
+                <div class="gallery-overlay"><div><h3>Етерично масло</h3><p>Нашият основен продукт</p></div></div>
+            </div>
+            <div class="gallery-item fade-in fade-in-d2" onclick="openLightbox(5)">
+                <img src="https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?w=600&q=80" alt="Лавандулови редове">
+                <div class="gallery-overlay"><div><h3>Редове лавандула</h3><p>Геометрия на полетата</p></div></div>
+            </div>
+            <div class="gallery-item fade-in fade-in-d3" onclick="openLightbox(6)">
+                <img src="https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=600&q=80" alt="Жътва на лавандула">
+                <div class="gallery-overlay"><div><h3>Жътва</h3><p>Ръчно бране на лавандулата</p></div></div>
+            </div>
+            <div class="gallery-item wide fade-in" onclick="openLightbox(7)">
+                <img src="https://images.unsplash.com/photo-1494972308805-c0d06c240f00?w=800&q=80" alt="Пурпурно поле">
+                <div class="gallery-overlay"><div><h3>Пурпурно море</h3><p>Безкрайни лавандулови полета</p></div></div>
+            </div>
+            <div class="gallery-item fade-in fade-in-d1" onclick="openLightbox(8)">
+                <img src="https://images.unsplash.com/photo-1471943038886-53fa4e8e3039?w=600&q=80" alt="Сушена лавандула">
+                <div class="gallery-overlay"><div><h3>Сушена лавандула</h3><p>Готова за опаковане</p></div></div>
+            </div>
+            <div class="gallery-item fade-in fade-in-d2" onclick="openLightbox(9)">
+                <img src="https://images.unsplash.com/photo-1595981267686-85cb7ea6bf47?w=600&q=80" alt="Лавандулови продукти">
+                <div class="gallery-overlay"><div><h3>Продукти</h3><p>Натурална козметика</p></div></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="quote-section">
+        <blockquote>"Лавандулата е душата на Прованс, но сърцето й бие в България."</blockquote>
+        <cite>- Семейство Петрови, ЛавандулаБГ</cite>
+    </section>
+
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+        <button class="lightbox-nav lightbox-prev" onclick="navigateLightbox(-1)">&#8249;</button>
+        <img class="lightbox-content" id="lightbox-img" src="" alt="">
+        <button class="lightbox-nav lightbox-next" onclick="navigateLightbox(1)">&#8250;</button>
+        <div class="lightbox-caption" id="lightbox-caption"></div>
+    </div>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h3>ЛавандулаБГ</h3>
+                <p>Семейна лавандулова ферма в Розовата долина. Отглеждаме, дестилираме и споделяме магията на българската лавандула от 1968 година.</p>
+                <div class="social-links">
+                    <a href="#">Fb</a><a href="#">Ig</a><a href="#">Yt</a>
+                </div>
+            </div>
+            <div>
+                <h4>Навигация</h4>
+                <ul>
+                    <li><a href="index.html">Начало</a></li>
+                    <li><a href="about.html">За стопанството</a></li>
+                    <li><a href="products.html">Продукция</a></li>
+                    <li><a href="gallery.html">Галерия</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Продукти</h4>
+                <ul>
+                    <li><a href="products.html">Етерично масло</a></li>
+                    <li><a href="products.html">Хидролат</a></li>
+                    <li><a href="products.html">Сушена лавандула</a></li>
+                    <li><a href="products.html">Козметика</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Контакти</h4>
+                <ul>
+                    <li><a href="tel:+35931234567">+359 312 345 67</a></li>
+                    <li><a href="mailto:info@lavandulabg.bg">info@lavandulabg.bg</a></li>
+                    <li><a href="contact.html">с. Розино, Карлово</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">&copy; 2026 ЛавандулаБГ. Всички права запазени.</div>
+    </footer>
+    <script>
+        const images = [
+            { src: 'https://images.unsplash.com/photo-1499002238440-d264edd596ec?w=1200&q=80', caption: 'Лавандулови полета - панорама' },
+            { src: 'https://images.unsplash.com/photo-1563910431434-5c72adbb90dd?w=1200&q=80', caption: 'Цъфтяща лавандула' },
+            { src: 'https://images.unsplash.com/photo-1468581264429-2548ef9eb732?w=1200&q=80', caption: 'Залез над лавандуловото поле' },
+            { src: 'https://images.unsplash.com/photo-1530099486328-e021101a494a?w=1200&q=80', caption: 'Лавандулов букет' },
+            { src: 'https://images.unsplash.com/photo-1611925091688-bc1648322284?w=1200&q=80', caption: 'Лавандулово етерично масло' },
+            { src: 'https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?w=1200&q=80', caption: 'Редове лавандула' },
+            { src: 'https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=1200&q=80', caption: 'Жътва на лавандулата' },
+            { src: 'https://images.unsplash.com/photo-1494972308805-c0d06c240f00?w=1200&q=80', caption: 'Пурпурно море от лавандула' },
+            { src: 'https://images.unsplash.com/photo-1471943038886-53fa4e8e3039?w=1200&q=80', caption: 'Сушена лавандула' },
+            { src: 'https://images.unsplash.com/photo-1595981267686-85cb7ea6bf47?w=1200&q=80', caption: 'Лавандулови продукти' }
+        ];
+        let currentIndex = 0;
+        function openLightbox(index) { currentIndex = index; document.getElementById('lightbox').classList.add('active'); document.getElementById('lightbox-img').src = images[index].src; document.getElementById('lightbox-caption').textContent = images[index].caption; document.body.style.overflow = 'hidden'; }
+        function closeLightbox() { document.getElementById('lightbox').classList.remove('active'); document.body.style.overflow = ''; }
+        function navigateLightbox(dir) { currentIndex = (currentIndex + dir + images.length) % images.length; document.getElementById('lightbox-img').src = images[currentIndex].src; document.getElementById('lightbox-caption').textContent = images[currentIndex].caption; }
+        document.getElementById('lightbox').addEventListener('click', function(e) { if (e.target === this) closeLightbox(); });
+        document.addEventListener('keydown', function(e) { if (!document.getElementById('lightbox').classList.contains('active')) return; if (e.key === 'Escape') closeLightbox(); if (e.key === 'ArrowLeft') navigateLightbox(-1); if (e.key === 'ArrowRight') navigateLightbox(1); });
+        const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.style.animationPlayState = 'running'; }); }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => { el.style.animationPlayState = 'paused'; observer.observe(el); });
+    </script>
+</body>
+</html>

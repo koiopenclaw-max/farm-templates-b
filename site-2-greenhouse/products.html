@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Продукция - ЗеленоСтъкло</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; color: #1B5E20; background: #FFFFFF; }
+        h1, h2, h3, h4 { font-family: 'Outfit', sans-serif; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes scaleIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        .fade-up { animation: fadeInUp 0.8s ease both; }
+        nav { background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); padding: 0.8rem 2rem; display: flex; justify-content: space-between; align-items: center; position: fixed; width: 100%; top: 0; z-index: 1000; box-shadow: 0 2px 20px rgba(46,125,50,0.1); }
+        .logo { font-family: 'Outfit', sans-serif; font-size: 1.5rem; font-weight: 700; color: #2E7D32; text-decoration: none; }
+        .logo span { color: #66BB6A; }
+        .nav-links { display: flex; list-style: none; gap: 1.5rem; }
+        .nav-links a { text-decoration: none; color: #1B5E20; font-weight: 500; font-size: 0.95rem; transition: color 0.3s; position: relative; }
+        .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: #43A047; transition: width 0.3s; }
+        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+        .nav-links a:hover, .nav-links a.active { color: #43A047; }
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; }
+        .hamburger span { width: 25px; height: 2px; background: #1B5E20; transition: 0.3s; }
+        .page-hero { height: 50vh; background: linear-gradient(135deg, rgba(27,94,32,0.75), rgba(46,125,50,0.55)), url('https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=1600&q=80') center/cover; display: flex; align-items: center; justify-content: center; text-align: center; color: #fff; }
+        .page-hero h1 { font-size: 3rem; animation: fadeInUp 0.8s ease; text-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+        .page-hero p { font-size: 1.2rem; margin-top: 0.8rem; opacity: 0.9; animation: fadeInUp 1s ease; }
+        section { padding: 5rem 2rem; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .section-title { text-align: center; margin-bottom: 3rem; }
+        .section-title h2 { font-size: 2.5rem; color: #1B5E20; margin-bottom: 0.5rem; }
+        .section-title p { color: #43A047; font-size: 1.1rem; }
+        .products-intro { background: #F1F8E9; text-align: center; }
+        .products-intro p { max-width: 700px; margin: 0 auto; line-height: 1.8; color: #2E7D32; font-size: 1.05rem; }
+        .products-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
+        .product-card { background: #fff; border-radius: 16px; overflow: hidden; box-shadow: 0 5px 25px rgba(46,125,50,0.08); transition: transform 0.3s, box-shadow 0.3s; animation: scaleIn 0.6s ease both; border: 1px solid rgba(102,187,106,0.1); }
+        .product-card:hover { transform: translateY(-10px); box-shadow: 0 20px 50px rgba(46,125,50,0.18); }
+        .product-card img { width: 100%; height: 200px; object-fit: cover; transition: transform 0.4s; }
+        .product-card:hover img { transform: scale(1.08); }
+        .product-img { overflow: hidden; }
+        .product-info { padding: 1.5rem; }
+        .product-info h3 { color: #1B5E20; font-size: 1.25rem; margin-bottom: 0.5rem; }
+        .product-info p { color: #2E7D32; font-size: 0.92rem; line-height: 1.7; margin-bottom: 0.8rem; }
+        .season-badge { display: inline-block; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.78rem; font-weight: 600; background: #E8F5E9; color: #2E7D32; border: 1px solid #66BB6A; }
+        .season-badge.yearround { background: #2E7D32; color: #fff; border-color: #2E7D32; }
+        .quality-section { background: #E8F5E9; }
+        .quality-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; text-align: center; }
+        .quality-item { padding: 1.5rem; }
+        .quality-item .icon { font-size: 2.5rem; margin-bottom: 0.8rem; }
+        .quality-item h3 { color: #1B5E20; font-size: 1.1rem; margin-bottom: 0.4rem; }
+        .quality-item p { color: #43A047; font-size: 0.9rem; }
+        .cta-section { background: linear-gradient(135deg, #2E7D32, #43A047); color: #fff; text-align: center; padding: 4rem 2rem; }
+        .cta-section h2 { font-size: 2.2rem; margin-bottom: 1rem; }
+        .cta-section p { font-size: 1.1rem; margin-bottom: 2rem; opacity: 0.9; }
+        .btn { display: inline-block; padding: 0.9rem 2.2rem; border-radius: 50px; font-family: 'Outfit', sans-serif; font-weight: 600; text-decoration: none; transition: all 0.3s; font-size: 1rem; }
+        .btn-outline { border: 2px solid #fff; color: #fff; background: transparent; }
+        .btn-outline:hover { background: #fff; color: #2E7D32; }
+        footer { background: #1B5E20; color: #E8F5E9; padding: 3rem 2rem 1.5rem; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2rem; max-width: 1200px; margin: 0 auto; }
+        .footer-col h4 { font-family: 'Outfit', sans-serif; margin-bottom: 1rem; color: #66BB6A; }
+        .footer-col p, .footer-col a { color: #E8F5E9; text-decoration: none; font-size: 0.9rem; line-height: 1.8; display: block; }
+        .footer-col a:hover { color: #66BB6A; }
+        .footer-bottom { text-align: center; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(102,187,106,0.2); font-size: 0.85rem; max-width: 1200px; margin-left: auto; margin-right: auto; }
+        .social-links { display: flex; gap: 1rem; margin-top: 0.5rem; }
+        .social-links a { width: 36px; height: 36px; border-radius: 50%; background: rgba(102,187,106,0.2); display: flex; align-items: center; justify-content: center; color: #66BB6A; text-decoration: none; transition: background 0.3s; font-size: 0.85rem; font-weight: 600; }
+        .social-links a:hover { background: #43A047; color: #fff; }
+        @media (max-width: 1024px) { .products-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 768px) {
+            .hamburger { display: flex; }
+            .nav-links { display: none; position: absolute; top: 100%; left: 0; width: 100%; background: #fff; flex-direction: column; padding: 1rem 2rem; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+            .nav-links.active { display: flex; }
+            .page-hero h1 { font-size: 2rem; }
+            .products-grid { grid-template-columns: 1fr; }
+            .quality-grid { grid-template-columns: 1fr 1fr; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo">Зелено<span>Стъкло</span></a>
+        <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('active')">
+            <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links">
+            <li><a href="index.html">Начало</a></li>
+            <li><a href="about.html">За стопанството</a></li>
+            <li><a href="products.html" class="active">Продукция</a></li>
+            <li><a href="gallery.html">Галерия</a></li>
+            <li><a href="contact.html">Контакти</a></li>
+        </ul>
+    </nav>
+    <section class="page-hero">
+        <div><h1>Нашата продукция</h1><p>Пресни оранжерийни зеленчуци с гарантирано качество</p></div>
+    </section>
+    <section class="products-intro">
+        <div class="container">
+            <div class="section-title"><h2>Какво отглеждаме</h2></div>
+            <p>Нашите оранжерии са специализирани в отглеждането на висококачествени зеленчуци и билки. Всеки продукт се отглежда с внимание, без ГМО, с минимално използване на химикали и максимална грижа за вкуса и хранителната стойност.</p>
+        </div>
+    </section>
+    <section>
+        <div class="container">
+            <div class="products-grid">
+                <div class="product-card" style="animation-delay:0.1s">
+                    <div class="product-img"><img src="https://images.unsplash.com/photo-1592924357228-91a4daadce55?w=500&q=80" alt="Домати"></div>
+                    <div class="product-info">
+                        <h3>Домати</h3>
+                        <p>Едри, сочни и ароматни домати от сортове Бик Харт, Розови и Бифстейк. Отглеждани на хидропоника за максимален вкус.</p>
+                        <span class="season-badge yearround">Целогодишно</span>
+                    </div>
+                </div>
+                <div class="product-card" style="animation-delay:0.2s">
+                    <div class="product-img"><img src="https://images.unsplash.com/photo-1449300079323-02e209d9d3a6?w=500&q=80" alt="Краставици"></div>
+                    <div class="product-info">
+                        <h3>Краставици</h3>
+                        <p>Хрупкави дълги краставици и корнишони, идеални за салати и консервиране. Бране всеки ден за максимална свежест.</p>
+                        <span class="season-badge yearround">Целогодишно</span>
+                    </div>
+                </div>
+                <div class="product-card" style="animation-delay:0.3s">
+                    <div class="product-img"><img src="https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?w=500&q=80" alt="Чушки"></div>
+                    <div class="product-info">
+                        <h3>Чушки</h3>
+                        <p>Сладки червени, жълти и зелени чушки. Камби и каписки сортове с висока хранителна стойност и наситен вкус.</p>
+                        <span class="season-badge">Март - Ноември</span>
+                    </div>
+                </div>
+                <div class="product-card" style="animation-delay:0.4s">
+                    <div class="product-img"><img src="https://images.unsplash.com/photo-1622206151226-18ca2c9ab4a1?w=500&q=80" alt="Маруля"></div>
+                    <div class="product-info">
+                        <h3>Маруля</h3>
+                        <p>Айсберг, ромска и батавия маруля, отглеждана хидропонно. Винаги хрупкава и свежа, без нитрати.</p>
+                        <span class="season-badge yearround">Целогодишно</span>
+                    </div>
+                </div>
+                <div class="product-card" style="animation-delay:0.5s">
+                    <div class="product-img"><img src="https://images.unsplash.com/photo-1515586000433-45406d8e6662?w=500&q=80" alt="Билки"></div>
+                    <div class="product-info">
+                        <h3>Билки</h3>
+                        <p>Свеж босилек, магданоз, копър, мента и розмарин. Отглеждани без пестициди, с интензивен аромат.</p>
+                        <span class="season-badge yearround">Целогодишно</span>
+                    </div>
+                </div>
+                <div class="product-card" style="animation-delay:0.6s">
+                    <div class="product-img"><img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=500&q=80" alt="Рукола"></div>
+                    <div class="product-info">
+                        <h3>Рукола</h3>
+                        <p>Пикантна рукола с характерен леко лютив вкус. Перфектна за салати, пици и гарнитури.</p>
+                        <span class="season-badge yearround">Целогодишно</span>
+                    </div>
+                </div>
+                <div class="product-card" style="animation-delay:0.7s">
+                    <div class="product-img"><img src="https://images.unsplash.com/photo-1558818498-28c1e002b655?w=500&q=80" alt="Чери домати"></div>
+                    <div class="product-info">
+                        <h3>Чери домати</h3>
+                        <p>Малки, сладки чери доматчета на клонка. Червени и жълти сортове с концентриран вкус и аромат.</p>
+                        <span class="season-badge">Февруари - Декември</span>
+                    </div>
+                </div>
+                <div class="product-card" style="animation-delay:0.8s">
+                    <div class="product-img"><img src="https://images.unsplash.com/photo-1563252722-6434563a985d?w=500&q=80" alt="Тиквички"></div>
+                    <div class="product-info">
+                        <h3>Тиквички</h3>
+                        <p>Нежни зелени тиквички, бирани млади за най-добър вкус. Идеални за готвене, грил и здравословни рецепти.</p>
+                        <span class="season-badge">Април - Октомври</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="quality-section">
+        <div class="container">
+            <div class="section-title"><h2>Нашите стандарти</h2><p>Качество във всеки етап от производството</p></div>
+            <div class="quality-grid">
+                <div class="quality-item fade-up"><div class="icon">&#9989;</div><h3>Без ГМО</h3><p>Само естествени, сертифицирани семена</p></div>
+                <div class="quality-item fade-up" style="animation-delay:0.15s"><div class="icon">&#127793;</div><h3>Контролирана среда</h3><p>Оптимални условия 365 дни</p></div>
+                <div class="quality-item fade-up" style="animation-delay:0.3s"><div class="icon">&#128230;</div><h3>Бърза доставка</h3><p>До 24 часа от брането</p></div>
+                <div class="quality-item fade-up" style="animation-delay:0.45s"><div class="icon">&#128176;</div><h3>Честни цени</h3><p>Директно от производителя</p></div>
+            </div>
+        </div>
+    </section>
+    <section class="cta-section">
+        <h2>Искате да поръчате нашата продукция?</h2>
+        <p>Предлагаме доставки на едро и дребно за магазини, ресторанти и крайни клиенти.</p>
+        <a href="contact.html" class="btn btn-outline">Свържете се с нас</a>
+    </section>
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>ЗеленоСтъкло</h4>
+                <p>Оранжерийно стопанство за производство на висококачествени зеленчуци в региона на Пловдив.</p>
+                <div class="social-links"><a href="#">Fb</a><a href="#">Ig</a><a href="#">Yt</a></div>
+            </div>
+            <div class="footer-col"><h4>Навигация</h4><a href="index.html">Начало</a><a href="about.html">За стопанството</a><a href="products.html">Продукция</a><a href="gallery.html">Галерия</a><a href="contact.html">Контакти</a></div>
+            <div class="footer-col"><h4>Продукция</h4><a href="products.html">Домати</a><a href="products.html">Краставици</a><a href="products.html">Чушки</a><a href="products.html">Билки</a></div>
+            <div class="footer-col"><h4>Контакти</h4><p>с. Брестник, община Родопи</p><p>4108 Пловдив, България</p><p>+359 32 123 456</p><p>info@zelenostaklo.bg</p></div>
+        </div>
+        <div class="footer-bottom"><p>&copy; 2026 ЗеленоСтъкло. Всички права запазени.</p></div>
+    </footer>
+</body>
+</html>

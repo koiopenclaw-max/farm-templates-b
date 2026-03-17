@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ранчо Тракия - Начало</title>
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;500;600;700&family=Cabin:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Cabin', sans-serif; background: #EFEBE9; color: #3E2723; }
+        h1, h2, h3, h4 { font-family: 'Teko', sans-serif; text-transform: uppercase; letter-spacing: 1px; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideRight { from { opacity: 0; transform: translateX(-60px); } to { opacity: 1; transform: translateX(0); } }
+        .fade-up { animation: fadeInUp 1s ease forwards; }
+        .fade-in { animation: fadeIn 1.2s ease forwards; }
+        .slide-r { animation: slideRight 1s ease forwards; }
+        /* NAV */
+        nav { background: #3E2723; padding: 0 5%; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 1000; }
+        .logo { font-family: 'Teko', sans-serif; font-size: 2rem; color: #D2B48C; padding: 12px 0; font-weight: 700; text-decoration: none; }
+        .logo span { color: #E64A19; }
+        .nav-links { display: flex; list-style: none; gap: 5px; }
+        .nav-links a { color: #EFEBE9; text-decoration: none; padding: 10px 16px; font-weight: 500; font-size: 0.95rem; border-radius: 4px; transition: all 0.3s; }
+        .nav-links a:hover, .nav-links a.active { background: #BF360C; color: #fff; }
+        .menu-toggle { display: none; background: none; border: none; color: #D2B48C; font-size: 1.8rem; cursor: pointer; }
+        @media (max-width: 768px) {
+            .menu-toggle { display: block; }
+            .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: #3E2723; padding: 10px 0; }
+            .nav-links.open { display: flex; }
+            .nav-links a { padding: 12px 20px; }
+        }
+        /* HERO */
+        .hero { position: relative; height: 90vh; min-height: 500px; background: url('https://images.unsplash.com/photo-1500595046743-cd271d694d30?w=1600&q=80') center/cover no-repeat; display: flex; align-items: center; justify-content: center; text-align: center; }
+        .hero::before { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(62,39,35,0.6), rgba(62,39,35,0.85)); }
+        .hero-content { position: relative; z-index: 1; max-width: 800px; padding: 20px; }
+        .hero h1 { font-size: 4.5rem; color: #D2B48C; line-height: 1; margin-bottom: 10px; animation: fadeInUp 0.8s ease; }
+        .hero h2 { font-size: 1.8rem; color: #FF5722; margin-bottom: 20px; animation: fadeInUp 1s ease; font-family: 'Teko', sans-serif; }
+        .hero p { color: #EFEBE9; font-size: 1.15rem; line-height: 1.7; margin-bottom: 30px; animation: fadeInUp 1.2s ease; }
+        .btn { display: inline-block; padding: 14px 36px; background: #BF360C; color: #fff; text-decoration: none; font-family: 'Teko', sans-serif; font-size: 1.3rem; text-transform: uppercase; letter-spacing: 2px; border: 2px solid #BF360C; transition: all 0.3s; border-radius: 3px; }
+        .btn:hover { background: transparent; color: #FF5722; border-color: #FF5722; transform: scale(1.05); }
+        /* FEATURES */
+        .features { padding: 80px 5%; }
+        .features h2 { text-align: center; font-size: 3rem; color: #3E2723; margin-bottom: 50px; }
+        .features h2 span { color: #BF360C; }
+        .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto; }
+        .feature-card { background: #fff; border-radius: 6px; overflow: hidden; box-shadow: 0 4px 20px rgba(62,39,35,0.1); transition: transform 0.4s, box-shadow 0.4s; animation: fadeInUp 0.8s ease forwards; }
+        .feature-card:hover { transform: translateY(-8px); box-shadow: 0 12px 35px rgba(62,39,35,0.2); }
+        .feature-card img { width: 100%; height: 220px; object-fit: cover; transition: transform 0.5s; }
+        .feature-card:hover img { transform: scale(1.05); }
+        .feature-card .card-body { padding: 25px; }
+        .feature-card h3 { font-size: 1.8rem; color: #BF360C; margin-bottom: 10px; }
+        .feature-card p { color: #795548; line-height: 1.6; }
+        /* VALUES */
+        .values { background: #3E2723; padding: 80px 5%; text-align: center; }
+        .values h2 { font-size: 3rem; color: #D2B48C; margin-bottom: 50px; }
+        .values-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; max-width: 1000px; margin: 0 auto; }
+        .value-item { animation: fadeIn 1s ease forwards; }
+        .value-item .icon { font-size: 3rem; margin-bottom: 15px; }
+        .value-item h3 { font-size: 1.6rem; color: #FF5722; margin-bottom: 10px; font-family: 'Teko', sans-serif; }
+        .value-item p { color: #C4A882; line-height: 1.6; font-size: 0.95rem; }
+        /* CTA */
+        .cta { padding: 80px 5%; text-align: center; background: url('https://images.unsplash.com/photo-1516467508483-a7212febe31a?w=1400&q=80') center/cover no-repeat; position: relative; }
+        .cta::before { content: ''; position: absolute; inset: 0; background: rgba(191,54,12,0.85); }
+        .cta-inner { position: relative; z-index: 1; }
+        .cta h2 { font-size: 3rem; color: #fff; margin-bottom: 15px; }
+        .cta p { color: #EFEBE9; font-size: 1.1rem; margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto; }
+        .btn-light { background: #D2B48C; color: #3E2723; border-color: #D2B48C; }
+        .btn-light:hover { background: transparent; color: #fff; border-color: #fff; }
+        /* FOOTER */
+        footer { background: #3E2723; color: #C4A882; padding: 50px 5% 25px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto 30px; }
+        .footer-col h3 { font-family: 'Teko', sans-serif; font-size: 1.5rem; color: #D2B48C; margin-bottom: 15px; text-transform: uppercase; }
+        .footer-col p, .footer-col a { color: #C4A882; line-height: 1.8; font-size: 0.9rem; text-decoration: none; display: block; }
+        .footer-col a:hover { color: #FF5722; }
+        .footer-bottom { text-align: center; border-top: 1px solid #795548; padding-top: 20px; font-size: 0.85rem; color: #795548; }
+        .social-links { display: flex; gap: 15px; margin-top: 10px; }
+        .social-links a { width: 40px; height: 40px; border: 2px solid #795548; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #C4A882; text-decoration: none; font-weight: 700; transition: all 0.3s; font-size: 0.8rem; }
+        .social-links a:hover { background: #BF360C; border-color: #BF360C; color: #fff; }
+        /* STATS */
+        .stats { padding: 60px 5%; background: linear-gradient(135deg, #C4A882, #D2B48C); }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .stat-item {
+            padding: 20px;
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        .stat-number {
+            font-family: 'Teko', sans-serif;
+            font-size: 3.5rem;
+            color: #BF360C;
+            font-weight: 700;
+            line-height: 1;
+        }
+        .stat-label {
+            font-size: 1rem;
+            color: #3E2723;
+            font-weight: 600;
+            margin-top: 5px;
+        }
+        /* TESTIMONIAL */
+        .testimonial {
+            padding: 70px 5%;
+            text-align: center;
+            background: #fff;
+        }
+        .testimonial h2 {
+            font-size: 2.8rem;
+            color: #3E2723;
+            margin-bottom: 40px;
+        }
+        .testimonial-card {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 30px;
+            background: #EFEBE9;
+            border-radius: 8px;
+            border-left: 5px solid #BF360C;
+            font-style: italic;
+            color: #795548;
+            line-height: 1.8;
+            font-size: 1.05rem;
+            transition: transform 0.3s;
+        }
+        .testimonial-card:hover {
+            transform: scale(1.02);
+        }
+        .testimonial-author {
+            margin-top: 15px;
+            font-style: normal;
+            font-weight: 700;
+            color: #3E2723;
+        }
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 2.8rem; }
+            .hero h2 { font-size: 1.4rem; }
+            .stat-number { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo">РАНЧО <span>ТРАКИЯ</span></a>
+        <button class="menu-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">&#9776;</button>
+        <ul class="nav-links">
+            <li><a href="index.html" class="active">Начало</a></li>
+            <li><a href="about.html">За стопанството</a></li>
+            <li><a href="products.html">Продукция</a></li>
+            <li><a href="gallery.html">Галерия</a></li>
+            <li><a href="contact.html">Контакти</a></li>
+        </ul>
+    </nav>
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="fade-up">Ранчо Тракия</h1>
+            <h2>Традиция в животновъдството от 1968 г.</h2>
+            <p>Добре дошли в нашето семейно ранчо, където отглеждаме говеда, коне и овце по свободен начин сред просторните пасища на Тракийската низина. Качество, грижа и уважение към природата.</p>
+            <a href="products.html" class="btn">Нашата продукция</a>
+        </div>
+    </section>
+    <section class="features">
+        <h2>Какво <span>отглеждаме</span></h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <img src="https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?w=600&q=80" alt="Говеда">
+                <div class="card-body">
+                    <h3>Говеда</h3>
+                    <p>Отглеждаме породисти говеда на свободна паша. Месото е с изключителен вкус и качество благодарение на естествената храна и грижа.</p>
+                </div>
+            </div>
+            <div class="feature-card">
+                <img src="https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=600&q=80" alt="Коне">
+                <div class="card-body">
+                    <h3>Коне</h3>
+                    <p>Нашите коне са гордост на стопанството. Предлагаме обучение по конна езда и незабравими разходки сред природата.</p>
+                </div>
+            </div>
+            <div class="feature-card">
+                <img src="https://images.unsplash.com/photo-1484557985045-edf25e08da73?w=600&q=80" alt="Овце">
+                <div class="card-body">
+                    <h3>Овце</h3>
+                    <p>Стадото ни от овце дава висококачествено агнешко месо, прясно мляко и фина вълна - продукти с автентичен вкус.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="values">
+        <h2>Нашите ценности</h2>
+        <div class="values-grid">
+            <div class="value-item">
+                <div class="icon">&#127807;</div>
+                <h3>Свободна паша</h3>
+                <p>Всички животни се отглеждат на открито, с достъп до просторни пасища и чиста вода.</p>
+            </div>
+            <div class="value-item">
+                <div class="icon">&#128150;</div>
+                <h3>Грижа и уважение</h3>
+                <p>Отнасяме се към всяко животно с любов и внимание, осигурявайки му комфорт и здраве.</p>
+            </div>
+            <div class="value-item">
+                <div class="icon">&#127793;</div>
+                <h3>Без химия</h3>
+                <p>Не използваме хормони за растеж, антибиотици или изкуствени фуражи.</p>
+            </div>
+            <div class="value-item">
+                <div class="icon">&#128104;&#8205;&#127806;</div>
+                <h3>Семейна традиция</h3>
+                <p>Три поколения опит и отдаденост към животновъдството и земята.</p>
+            </div>
+        </div>
+    </section>
+    <section class="stats">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-number">55+</div>
+                <div class="stat-label">Години традиция</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">500</div>
+                <div class="stat-label">Декара пасища</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">120+</div>
+                <div class="stat-label">Глави добитък</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">3</div>
+                <div class="stat-label">Поколения фермери</div>
+            </div>
+        </div>
+    </section>
+    <section class="testimonial">
+        <h2>Какво казват нашите клиенти</h2>
+        <div class="testimonial-card">
+            "Месото от Ранчо Тракия е несравнимо с нищо, което съм опитвал. Вкусът е автентичен, качеството безупречно. Цялото семейство се влюби в техните продукти и вече две години поръчваме редовно."
+            <div class="testimonial-author">- Георги Димитров, Стара Загора</div>
+        </div>
+    </section>
+    <section class="cta">
+        <div class="cta-inner">
+            <h2>Заповядайте в ранчото</h2>
+            <p>Организираме посещения, дегустации и конни разходки. Свържете се с нас и преживейте истинския селски живот.</p>
+            <a href="contact.html" class="btn btn-light">Свържете се с нас</a>
+        </div>
+    </section>
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h3>Ранчо Тракия</h3>
+                <p>Семейно животновъдно стопанство с повече от 55 години история. Качествена продукция директно от фермата.</p>
+                <div class="social-links">
+                    <a href="#">Fb</a><a href="#">Ig</a><a href="#">Yt</a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>Навигация</h3>
+                <a href="index.html">Начало</a><a href="about.html">За стопанството</a>
+                <a href="products.html">Продукция</a><a href="gallery.html">Галерия</a><a href="contact.html">Контакти</a>
+            </div>
+            <div class="footer-col">
+                <h3>Контакти</h3>
+                <p>с. Розово, общ. Казанлък</p><p>обл. Стара Загора</p>
+                <p>+359 88 765 4321</p><p>info@rancho-trakia.bg</p>
+            </div>
+        </div>
+        <div class="footer-bottom">&copy; 2026 Ранчо Тракия. Всички права запазени.</div>
+    </footer>
+</body>
+</html>

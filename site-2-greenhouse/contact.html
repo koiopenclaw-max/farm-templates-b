@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Контакти - ЗеленоСтъкло</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; color: #1B5E20; background: #FFFFFF; }
+        h1, h2, h3, h4 { font-family: 'Outfit', sans-serif; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideInLeft { from { opacity: 0; transform: translateX(-40px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes slideInRight { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: translateX(0); } }
+        .fade-up { animation: fadeInUp 0.8s ease both; }
+        .slide-left { animation: slideInLeft 0.8s ease both; }
+        .slide-right { animation: slideInRight 0.8s ease both; }
+        nav { background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); padding: 0.8rem 2rem; display: flex; justify-content: space-between; align-items: center; position: fixed; width: 100%; top: 0; z-index: 1000; box-shadow: 0 2px 20px rgba(46,125,50,0.1); }
+        .logo { font-family: 'Outfit', sans-serif; font-size: 1.5rem; font-weight: 700; color: #2E7D32; text-decoration: none; }
+        .logo span { color: #66BB6A; }
+        .nav-links { display: flex; list-style: none; gap: 1.5rem; }
+        .nav-links a { text-decoration: none; color: #1B5E20; font-weight: 500; font-size: 0.95rem; transition: color 0.3s; position: relative; }
+        .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: #43A047; transition: width 0.3s; }
+        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+        .nav-links a:hover, .nav-links a.active { color: #43A047; }
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; }
+        .hamburger span { width: 25px; height: 2px; background: #1B5E20; transition: 0.3s; }
+        .page-hero { height: 45vh; background: linear-gradient(135deg, rgba(27,94,32,0.75), rgba(46,125,50,0.55)), url('https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=1600&q=80') center/cover; display: flex; align-items: center; justify-content: center; text-align: center; color: #fff; }
+        .page-hero h1 { font-size: 3rem; animation: fadeInUp 0.8s ease; text-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+        .page-hero p { font-size: 1.2rem; margin-top: 0.8rem; opacity: 0.9; animation: fadeInUp 1s ease; }
+        section { padding: 5rem 2rem; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+        .contact-info { background: #F1F8E9; padding: 2.5rem; border-radius: 20px; }
+        .contact-info h2 { font-size: 2rem; color: #1B5E20; margin-bottom: 1.5rem; }
+        .info-item { display: flex; gap: 1rem; margin-bottom: 1.5rem; align-items: flex-start; }
+        .info-icon { width: 48px; height: 48px; background: #2E7D32; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; color: #fff; flex-shrink: 0; }
+        .info-text h3 { color: #1B5E20; font-size: 1rem; margin-bottom: 0.2rem; }
+        .info-text p { color: #2E7D32; font-size: 0.92rem; line-height: 1.6; }
+        .working-hours { margin-top: 2rem; padding: 1.5rem; background: #E8F5E9; border-radius: 12px; }
+        .working-hours h3 { color: #1B5E20; margin-bottom: 0.8rem; }
+        .hours-row { display: flex; justify-content: space-between; padding: 0.4rem 0; border-bottom: 1px solid rgba(46,125,50,0.1); color: #2E7D32; font-size: 0.92rem; }
+        .hours-row:last-child { border-bottom: none; }
+        .contact-form { background: #fff; padding: 2.5rem; border-radius: 20px; box-shadow: 0 10px 40px rgba(46,125,50,0.1); border: 1px solid rgba(102,187,106,0.15); }
+        .contact-form h2 { font-size: 2rem; color: #1B5E20; margin-bottom: 0.5rem; }
+        .contact-form > p { color: #43A047; margin-bottom: 1.5rem; font-size: 0.95rem; }
+        .form-group { margin-bottom: 1.2rem; }
+        .form-group label { display: block; color: #1B5E20; font-weight: 500; margin-bottom: 0.4rem; font-size: 0.92rem; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.85rem 1rem; border: 2px solid #E8F5E9; border-radius: 10px; font-family: 'Inter', sans-serif; font-size: 0.95rem; color: #1B5E20; transition: border-color 0.3s, box-shadow 0.3s; background: #FAFAFA; outline: none; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: #43A047; box-shadow: 0 0 0 3px rgba(67,160,71,0.15); background: #fff; }
+        .form-group textarea { height: 120px; resize: vertical; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .btn-submit { display: inline-block; padding: 0.95rem 2.5rem; border-radius: 50px; font-family: 'Outfit', sans-serif; font-weight: 600; text-decoration: none; transition: all 0.3s; font-size: 1rem; cursor: pointer; border: none; background: #43A047; color: #fff; width: 100%; }
+        .btn-submit:hover { background: #2E7D32; transform: translateY(-2px); box-shadow: 0 8px 25px rgba(46,125,50,0.3); }
+        .map-section { background: #F1F8E9; }
+        .map-section h2 { text-align: center; font-size: 2rem; color: #1B5E20; margin-bottom: 2rem; }
+        .map-container { border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(46,125,50,0.1); height: 400px; }
+        .map-container iframe { width: 100%; height: 100%; border: none; }
+        .quick-contact { background: #E8F5E9; }
+        .quick-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; text-align: center; }
+        .quick-card { background: #fff; padding: 2rem; border-radius: 16px; transition: transform 0.3s, box-shadow 0.3s; }
+        .quick-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(46,125,50,0.12); }
+        .quick-card .icon { font-size: 2.2rem; margin-bottom: 0.8rem; }
+        .quick-card h3 { color: #1B5E20; margin-bottom: 0.4rem; }
+        .quick-card p { color: #2E7D32; font-size: 0.92rem; }
+        .quick-card a { color: #43A047; text-decoration: none; font-weight: 600; }
+        .quick-card a:hover { text-decoration: underline; }
+        footer { background: #1B5E20; color: #E8F5E9; padding: 3rem 2rem 1.5rem; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2rem; max-width: 1200px; margin: 0 auto; }
+        .footer-col h4 { font-family: 'Outfit', sans-serif; margin-bottom: 1rem; color: #66BB6A; }
+        .footer-col p, .footer-col a { color: #E8F5E9; text-decoration: none; font-size: 0.9rem; line-height: 1.8; display: block; }
+        .footer-col a:hover { color: #66BB6A; }
+        .footer-bottom { text-align: center; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(102,187,106,0.2); font-size: 0.85rem; max-width: 1200px; margin-left: auto; margin-right: auto; }
+        .social-links { display: flex; gap: 1rem; margin-top: 0.5rem; }
+        .social-links a { width: 36px; height: 36px; border-radius: 50%; background: rgba(102,187,106,0.2); display: flex; align-items: center; justify-content: center; color: #66BB6A; text-decoration: none; transition: background 0.3s; font-size: 0.85rem; font-weight: 600; }
+        .social-links a:hover { background: #43A047; color: #fff; }
+        @media (max-width: 768px) {
+            .hamburger { display: flex; }
+            .nav-links { display: none; position: absolute; top: 100%; left: 0; width: 100%; background: #fff; flex-direction: column; padding: 1rem 2rem; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+            .nav-links.active { display: flex; }
+            .page-hero h1 { font-size: 2rem; }
+            .contact-grid { grid-template-columns: 1fr; }
+            .form-row { grid-template-columns: 1fr; }
+            .quick-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo">Зелено<span>Стъкло</span></a>
+        <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('active')">
+            <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links">
+            <li><a href="index.html">Начало</a></li>
+            <li><a href="about.html">За стопанството</a></li>
+            <li><a href="products.html">Продукция</a></li>
+            <li><a href="gallery.html">Галерия</a></li>
+            <li><a href="contact.html" class="active">Контакти</a></li>
+        </ul>
+    </nav>
+    <section class="page-hero">
+        <div><h1>Контакти</h1><p>Свържете се с нас за поръчки, партньорства или посещения</p></div>
+    </section>
+    <section>
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-info slide-left">
+                    <h2>Информация за контакт</h2>
+                    <div class="info-item">
+                        <div class="info-icon">&#128205;</div>
+                        <div class="info-text"><h3>Адрес</h3><p>с. Брестник, община Родопи<br>4108 Пловдив, България</p></div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">&#128222;</div>
+                        <div class="info-text"><h3>Телефон</h3><p>+359 32 123 456<br>+359 888 123 456</p></div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">&#9993;</div>
+                        <div class="info-text"><h3>Имейл</h3><p>info@zelenostaklo.bg<br>orders@zelenostaklo.bg</p></div>
+                    </div>
+                    <div class="working-hours">
+                        <h3>Работно време</h3>
+                        <div class="hours-row"><span>Понеделник - Петък</span><span>07:00 - 18:00</span></div>
+                        <div class="hours-row"><span>Събота</span><span>08:00 - 14:00</span></div>
+                        <div class="hours-row"><span>Неделя</span><span>Затворено</span></div>
+                    </div>
+                </div>
+                <div class="contact-form slide-right">
+                    <h2>Направете запитване</h2>
+                    <p>Попълнете формата и ще се свържем с вас до 24 часа.</p>
+                    <form onsubmit="event.preventDefault(); alert('Благодарим за вашето запитване! Ще се свържем с вас скоро.');">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name">Име *</label>
+                                <input type="text" id="name" name="name" placeholder="Вашето име" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Телефон *</label>
+                                <input type="tel" id="phone" name="phone" placeholder="+359 ..." required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Имейл *</label>
+                            <input type="email" id="email" name="email" placeholder="your@email.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="type">Тип запитване</label>
+                            <select id="type" name="type">
+                                <option value="">-- Изберете --</option>
+                                <option value="wholesale">Поръчка на едро</option>
+                                <option value="retail">Поръчка на дребно</option>
+                                <option value="partnership">Партньорство</option>
+                                <option value="visit">Посещение</option>
+                                <option value="other">Друго</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Съобщение</label>
+                            <textarea id="message" name="message" placeholder="Вашето съобщение..."></textarea>
+                        </div>
+                        <button type="submit" class="btn-submit">Изпратете запитване</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="quick-contact">
+        <div class="container">
+            <div class="quick-grid">
+                <div class="quick-card fade-up">
+                    <div class="icon">&#128222;</div>
+                    <h3>Обадете се</h3>
+                    <p>За бързи въпроси и поръчки</p>
+                    <a href="tel:+35932123456">+359 32 123 456</a>
+                </div>
+                <div class="quick-card fade-up" style="animation-delay:0.15s">
+                    <div class="icon">&#9993;</div>
+                    <h3>Пишете ни</h3>
+                    <p>Отговаряме до 24 часа</p>
+                    <a href="mailto:info@zelenostaklo.bg">info@zelenostaklo.bg</a>
+                </div>
+                <div class="quick-card fade-up" style="animation-delay:0.3s">
+                    <div class="icon">&#128205;</div>
+                    <h3>Посетете ни</h3>
+                    <p>с. Брестник, община Родопи</p>
+                    <a href="#map">Вижте на картата</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="map-section" id="map">
+        <div class="container">
+            <h2>Намерете ни на картата</h2>
+            <div class="map-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d47224.94562498558!2d24.6833!3d42.0833!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14acd1a5bffa4c3d%3A0x2e4b5e2e4b5e2e4b!2sBrestnik%2C%20Bulgaria!5e0!3m2!1sbg!2sbg!4v1700000000000!5m2!1sbg!2sbg" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>ЗеленоСтъкло</h4>
+                <p>Оранжерийно стопанство за производство на висококачествени зеленчуци в региона на Пловдив.</p>
+                <div class="social-links"><a href="#">Fb</a><a href="#">Ig</a><a href="#">Yt</a></div>
+            </div>
+            <div class="footer-col"><h4>Навигация</h4><a href="index.html">Начало</a><a href="about.html">За стопанството</a><a href="products.html">Продукция</a><a href="gallery.html">Галерия</a><a href="contact.html">Контакти</a></div>
+            <div class="footer-col"><h4>Продукция</h4><a href="products.html">Домати</a><a href="products.html">Краставици</a><a href="products.html">Чушки</a><a href="products.html">Билки</a></div>
+            <div class="footer-col"><h4>Контакти</h4><p>с. Брестник, община Родопи</p><p>4108 Пловдив, България</p><p>+359 32 123 456</p><p>info@zelenostaklo.bg</p></div>
+        </div>
+        <div class="footer-bottom"><p>&copy; 2026 ЗеленоСтъкло. Всички права запазени.</p></div>
+    </footer>
+</body>
+</html>

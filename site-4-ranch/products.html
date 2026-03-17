@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Продукция - Ранчо Тракия</title>
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;500;600;700&family=Cabin:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Cabin', sans-serif; background: #EFEBE9; color: #3E2723; }
+        h1, h2, h3, h4 { font-family: 'Teko', sans-serif; text-transform: uppercase; letter-spacing: 1px; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes scaleIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        nav { background: #3E2723; padding: 0 5%; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 1000; }
+        .logo { font-family: 'Teko', sans-serif; font-size: 2rem; color: #D2B48C; padding: 12px 0; font-weight: 700; text-decoration: none; }
+        .logo span { color: #E64A19; }
+        .nav-links { display: flex; list-style: none; gap: 5px; }
+        .nav-links a { color: #EFEBE9; text-decoration: none; padding: 10px 16px; font-weight: 500; font-size: 0.95rem; border-radius: 4px; transition: all 0.3s; }
+        .nav-links a:hover, .nav-links a.active { background: #BF360C; color: #fff; }
+        .menu-toggle { display: none; background: none; border: none; color: #D2B48C; font-size: 1.8rem; cursor: pointer; }
+        @media (max-width: 768px) {
+            .menu-toggle { display: block; }
+            .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: #3E2723; padding: 10px 0; }
+            .nav-links.open { display: flex; }
+            .nav-links a { padding: 12px 20px; }
+        }
+        .page-hero { height: 45vh; min-height: 300px; background: url('https://images.unsplash.com/photo-1529258283598-8d6fe60b27f4?w=1400&q=80') center/cover; display: flex; align-items: center; justify-content: center; position: relative; }
+        .page-hero::before { content: ''; position: absolute; inset: 0; background: rgba(62,39,35,0.7); }
+        .page-hero h1 { position: relative; z-index: 1; font-size: 4rem; color: #D2B48C; animation: fadeInUp 0.8s ease; }
+        .page-hero p { position: relative; z-index: 1; color: #C4A882; font-size: 1.2rem; margin-top: 10px; }
+        /* PRODUCTS */
+        .products-section { padding: 80px 5%; }
+        .products-section h2 { text-align: center; font-size: 3rem; color: #3E2723; margin-bottom: 15px; }
+        .products-section > p { text-align: center; color: #795548; max-width: 600px; margin: 0 auto 50px; line-height: 1.7; }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 35px; max-width: 1200px; margin: 0 auto; }
+        .product-card { background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 20px rgba(62,39,35,0.1); transition: transform 0.4s, box-shadow 0.4s; animation: scaleIn 0.6s ease forwards; }
+        .product-card:hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(62,39,35,0.2); }
+        .product-img-wrap { position: relative; overflow: hidden; }
+        .product-card img { width: 100%; height: 240px; object-fit: cover; transition: transform 0.6s; }
+        .product-card:hover img { transform: scale(1.1); }
+        .product-badge { position: absolute; top: 15px; right: 15px; background: #BF360C; color: #fff; padding: 5px 15px; font-family: 'Teko', sans-serif; font-size: 1rem; text-transform: uppercase; border-radius: 3px; }
+        .product-body { padding: 25px; }
+        .product-body h3 { font-size: 1.8rem; color: #BF360C; margin-bottom: 8px; }
+        .product-body p { color: #795548; line-height: 1.7; font-size: 0.95rem; margin-bottom: 15px; }
+        .product-features { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
+        .product-features li { background: #EFEBE9; color: #3E2723; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
+        /* SERVICES BANNER */
+        .services-banner { background: linear-gradient(135deg, #3E2723, #795548); padding: 80px 5%; text-align: center; }
+        .services-banner h2 { font-size: 3rem; color: #D2B48C; margin-bottom: 40px; }
+        .services-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; max-width: 1100px; margin: 0 auto; }
+        .service-item { background: rgba(255,255,255,0.08); border: 1px solid #795548; padding: 35px 25px; border-radius: 8px; transition: all 0.4s; }
+        .service-item:hover { background: rgba(191,54,12,0.2); border-color: #E64A19; transform: translateY(-5px); }
+        .service-item .icon { font-size: 2.8rem; margin-bottom: 15px; }
+        .service-item h3 { font-size: 1.6rem; color: #FF5722; margin-bottom: 10px; font-family: 'Teko', sans-serif; }
+        .service-item p { color: #C4A882; line-height: 1.6; font-size: 0.9rem; }
+        /* CTA */
+        .order-cta { padding: 60px 5%; text-align: center; background: #D2B48C; }
+        .order-cta h2 { font-size: 2.5rem; color: #3E2723; margin-bottom: 15px; }
+        .order-cta p { color: #795548; margin-bottom: 25px; font-size: 1.05rem; }
+        .btn { display: inline-block; padding: 14px 36px; background: #BF360C; color: #fff; text-decoration: none; font-family: 'Teko', sans-serif; font-size: 1.3rem; text-transform: uppercase; letter-spacing: 2px; border: 2px solid #BF360C; transition: all 0.3s; border-radius: 3px; }
+        .btn:hover { background: #3E2723; border-color: #3E2723; transform: scale(1.05); }
+        /* FOOTER */
+        footer { background: #3E2723; color: #C4A882; padding: 50px 5% 25px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto 30px; }
+        .footer-col h3 { font-family: 'Teko', sans-serif; font-size: 1.5rem; color: #D2B48C; margin-bottom: 15px; text-transform: uppercase; }
+        .footer-col p, .footer-col a { color: #C4A882; line-height: 1.8; font-size: 0.9rem; text-decoration: none; display: block; }
+        .footer-col a:hover { color: #FF5722; }
+        .footer-bottom { text-align: center; border-top: 1px solid #795548; padding-top: 20px; font-size: 0.85rem; color: #795548; }
+        .social-links { display: flex; gap: 15px; margin-top: 10px; }
+        .social-links a { width: 40px; height: 40px; border: 2px solid #795548; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #C4A882; text-decoration: none; font-weight: 700; transition: all 0.3s; font-size: 0.8rem; }
+        .social-links a:hover { background: #BF360C; border-color: #BF360C; color: #fff; }
+        @media (max-width: 600px) { .page-hero h1 { font-size: 2.5rem; } .products-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo">РАНЧО <span>ТРАКИЯ</span></a>
+        <button class="menu-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">&#9776;</button>
+        <ul class="nav-links">
+            <li><a href="index.html">Начало</a></li>
+            <li><a href="about.html">За стопанството</a></li>
+            <li><a href="products.html" class="active">Продукция</a></li>
+            <li><a href="gallery.html">Галерия</a></li>
+            <li><a href="contact.html">Контакти</a></li>
+        </ul>
+    </nav>
+    <section class="page-hero">
+        <div style="text-align:center">
+            <h1>Нашата продукция</h1>
+            <p style="position:relative;z-index:1;color:#C4A882;font-size:1.15rem;margin-top:8px;">Директно от пасището до вашата маса</p>
+        </div>
+    </section>
+    <section class="products-section">
+        <h2>Месни продукти</h2>
+        <p>Висококачествено месо от животни, отгледани на свободна паша, без хормони и антибиотици.</p>
+        <div class="products-grid">
+            <div class="product-card">
+                <div class="product-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1603048297172-c92544798d5a?w=600&q=80" alt="Телешко месо">
+                    <span class="product-badge">Премиум</span>
+                </div>
+                <div class="product-body">
+                    <h3>Прясно телешко</h3>
+                    <p>Отлежало телешко месо от породи Ангус и Херефорд. Мраморирано, нежно и с наситен вкус. Предлагаме различни разфасовки.</p>
+                    <ul class="product-features"><li>Свободна паша</li><li>Без хормони</li><li>Вакуумирано</li></ul>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1588168333986-5078d3ae3976?w=600&q=80" alt="Агнешко месо">
+                    <span class="product-badge">Сезонно</span>
+                </div>
+                <div class="product-body">
+                    <h3>Агнешко месо</h3>
+                    <p>Младо агнешко от каракачанска порода, хранено с естествена трева и майчино мляко. Идеално за печене и грил.</p>
+                    <ul class="product-features"><li>Каракачанска порода</li><li>Пасищно</li><li>Без добавки</li></ul>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=600&q=80" alt="Свинско месо">
+                </div>
+                <div class="product-body">
+                    <h3>Домашно свинско</h3>
+                    <p>Свинско месо от свободно отглеждани прасета, хранени с натурални фуражи и зърнени смески от собствено производство.</p>
+                    <ul class="product-features"><li>Свободно отглеждане</li><li>Натурална храна</li><li>Пресни разфасовки</li></ul>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?w=600&q=80" alt="Млечни продукти">
+                </div>
+                <div class="product-body">
+                    <h3>Млечни продукти</h3>
+                    <p>Прясно краве и овче мляко, домашно кисело мляко, сирене и кашкавал. Истински вкус от балканските пасища.</p>
+                    <ul class="product-features"><li>Пресни ежедневно</li><li>Ръчна изработка</li><li>Традиционни рецепти</li></ul>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1457530378978-8bac673b8062?w=600&q=80" alt="Кожени изделия">
+                </div>
+                <div class="product-body">
+                    <h3>Кожени изделия</h3>
+                    <p>Ръчно изработени кожени продукти от естествена кожа - колани, чанти, портфейли и аксесоари за ездачи.</p>
+                    <ul class="product-features"><li>Ръчна изработка</li><li>Естествена кожа</li><li>Уникален дизайн</li></ul>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1580906853203-f493e1450d1e?w=600&q=80" alt="Вълна">
+                </div>
+                <div class="product-body">
+                    <h3>Вълна и вълнени изделия</h3>
+                    <p>Фина вълна от каракачански овце. Предлагаме суровини и готови вълнени одеяла, чорапи и шалове.</p>
+                    <ul class="product-features"><li>100% натурална</li><li>Ръчно преработена</li><li>Хипоалергенна</li></ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="services-banner">
+        <h2>Услуги и преживявания</h2>
+        <div class="services-row">
+            <div class="service-item">
+                <div class="icon">&#127943;</div>
+                <h3>Конна езда</h3>
+                <p>Разходки с коне за начинаещи и напреднали. Маршрути през гори, поля и планински пътеки. Уроци по езда за всички възрасти.</p>
+            </div>
+            <div class="service-item">
+                <div class="icon">&#128218;</div>
+                <h3>Обучение по езда</h3>
+                <p>Професионални курсове по конна езда с опитни инструктори. Индивидуални и групови занятия за деца и възрастни.</p>
+            </div>
+            <div class="service-item">
+                <div class="icon">&#127968;</div>
+                <h3>Посещение на ранчото</h3>
+                <p>Организирани турове из стопанството с дегустация на продукти. Перфектно за семейства, училищни групи и туристи.</p>
+            </div>
+        </div>
+    </section>
+    <section class="order-cta">
+        <h2>Поръчайте директно от фермата</h2>
+        <p>Доставяме до Стара Загора, Казанлък, Сливен и околностите. Свържете се с нас за индивидуална оферта.</p>
+        <a href="contact.html" class="btn">Направете запитване</a>
+    </section>
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h3>Ранчо Тракия</h3>
+                <p>Семейно животновъдно стопанство с повече от 55 години история.</p>
+                <div class="social-links"><a href="#">Fb</a><a href="#">Ig</a><a href="#">Yt</a></div>
+            </div>
+            <div class="footer-col">
+                <h3>Навигация</h3>
+                <a href="index.html">Начало</a><a href="about.html">За стопанството</a>
+                <a href="products.html">Продукция</a><a href="gallery.html">Галерия</a><a href="contact.html">Контакти</a>
+            </div>
+            <div class="footer-col">
+                <h3>Контакти</h3>
+                <p>с. Розово, общ. Казанлък</p><p>обл. Стара Загора</p>
+                <p>+359 88 765 4321</p><p>info@rancho-trakia.bg</p>
+            </div>
+        </div>
+        <div class="footer-bottom">&copy; 2026 Ранчо Тракия. Всички права запазени.</div>
+    </footer>
+</body>
+</html>

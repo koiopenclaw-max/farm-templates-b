@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>За стопанството - Пчелна ферма "Златен кошер"</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Lora', serif; color: #3E2723; background: #FFF8E1; }
+        a { text-decoration: none; color: inherit; }
+        h1, h2, h3, h4 { font-family: 'Amatic SC', cursive; }
+        nav { background: #3E2723; position: sticky; top: 0; z-index: 1000; }
+        .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; }
+        .nav-logo { font-family: 'Amatic SC', cursive; font-size: 1.8rem; color: #F0A500; padding: 15px 0; font-weight: 700; }
+        .nav-links { display: flex; list-style: none; gap: 5px; }
+        .nav-links a { color: #FFF8E1; padding: 20px 15px; display: block; font-size: 0.95rem; transition: background 0.3s, color 0.3s; }
+        .nav-links a:hover, .nav-links a.active { background: #F0A500; color: #3E2723; }
+        .menu-toggle { display: none; background: none; border: none; color: #F0A500; font-size: 1.8rem; cursor: pointer; }
+        @media (max-width: 768px) {
+            .menu-toggle { display: block; }
+            .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: #3E2723; }
+            .nav-links.open { display: flex; }
+            .nav-links a { padding: 15px 20px; border-top: 1px solid #5D4037; }
+        }
+        /* Page Header */
+        .page-header { background: linear-gradient(rgba(62,39,35,0.6), rgba(62,39,35,0.75)),
+            url('https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?w=1400&q=80') center/cover no-repeat;
+            padding: 100px 20px 60px; text-align: center; color: #FFF8E1; }
+        .page-header h1 { font-size: clamp(2.8rem, 7vw, 4.5rem); margin-bottom: 10px; animation: fadeInUp 1s ease; }
+        .page-header p { font-size: 1.1rem; opacity: 0.9; animation: fadeInUp 1s ease 0.2s both; }
+        section { padding: 60px 20px; }
+        .container { max-width: 1100px; margin: 0 auto; }
+        .section-title { font-size: 3rem; text-align: center; margin-bottom: 40px; color: #3E2723; }
+        /* Story */
+        .story { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; margin-bottom: 50px; }
+        .story.reverse { direction: rtl; }
+        .story.reverse > * { direction: ltr; }
+        .story img { width: 100%; border-radius: 12px; box-shadow: 0 6px 25px rgba(62,39,35,0.2); transition: transform 0.4s; }
+        .story img:hover { transform: scale(1.03); }
+        .story-text h2 { font-size: 2.5rem; margin-bottom: 12px; }
+        .story-text p { line-height: 1.8; color: #5D4037; margin-bottom: 12px; }
+        @media (max-width: 768px) {
+            .story, .story.reverse { grid-template-columns: 1fr; direction: ltr; }
+        }
+        /* Methods */
+        .methods-bg { background: #3E2723; color: #FFF8E1; }
+        .methods-bg .section-title { color: #F0A500; }
+        .methods-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 25px; }
+        .method-card { background: #5D4037; padding: 30px; border-radius: 12px; text-align: center; transition: transform 0.3s, box-shadow 0.3s; }
+        .method-card:hover { transform: translateY(-6px); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        .method-icon { font-size: 2.8rem; margin-bottom: 12px; }
+        .method-card h3 { font-size: 1.8rem; color: #F0A500; margin-bottom: 10px; }
+        .method-card p { font-size: 0.9rem; opacity: 0.85; line-height: 1.6; }
+        /* Timeline */
+        .timeline { position: relative; max-width: 700px; margin: 0 auto; padding-left: 40px; }
+        .timeline::before { content: ''; position: absolute; left: 15px; top: 0; bottom: 0; width: 3px; background: #D4931A; }
+        .timeline-item { position: relative; margin-bottom: 35px; animation: fadeInUp 0.6s ease both; }
+        .timeline-item::before { content: ''; position: absolute; left: -29px; top: 5px; width: 14px; height: 14px;
+            background: #F0A500; border-radius: 50%; border: 3px solid #FFF8E1; box-shadow: 0 0 0 3px #D4931A; }
+        .timeline-item h3 { font-size: 1.6rem; color: #D4931A; margin-bottom: 5px; }
+        .timeline-item p { color: #5D4037; line-height: 1.6; font-size: 0.95rem; }
+        /* Team */
+        .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 25px; text-align: center; }
+        .team-card { padding: 25px; border-radius: 12px; background: white; box-shadow: 0 4px 15px rgba(62,39,35,0.1); transition: transform 0.3s; }
+        .team-card:hover { transform: translateY(-5px); }
+        .team-card img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin-bottom: 12px;
+            border: 3px solid #F0A500; }
+        .team-card h3 { font-size: 1.6rem; margin-bottom: 5px; }
+        .team-card p { font-size: 0.9rem; color: #5D4037; }
+        .team-card .role { color: #D4931A; font-style: italic; margin-bottom: 8px; }
+        /* Footer */
+        footer { background: #3E2723; color: #FFF8E1; padding: 40px 20px; }
+        .footer-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 30px; }
+        .footer-col h4 { font-family: 'Amatic SC', cursive; font-size: 1.8rem; color: #F0A500; margin-bottom: 12px; }
+        .footer-col p, .footer-col a { font-size: 0.9rem; line-height: 1.8; color: #FFF8E1; opacity: 0.8; display: block; }
+        .footer-col a:hover { opacity: 1; color: #F0A500; }
+        .social-icons { display: flex; gap: 12px; margin-top: 10px; }
+        .social-icons span { width: 38px; height: 38px; border-radius: 50%; border: 1px solid #F0A500; display: flex; align-items: center;
+            justify-content: center; font-size: 0.8rem; color: #F0A500; transition: all 0.3s; cursor: pointer; }
+        .social-icons span:hover { background: #F0A500; color: #3E2723; }
+        .footer-bottom { text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #5D4037; font-size: 0.85rem; opacity: 0.7; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in { opacity: 0; transform: translateY(25px); transition: opacity 0.8s ease, transform 0.8s ease; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">&#127855; Златен кошер</a>
+            <button class="menu-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">&#9776;</button>
+            <ul class="nav-links">
+                <li><a href="index.html">Начало</a></li>
+                <li><a href="about.html" class="active">За стопанството</a></li>
+                <li><a href="products.html">Продукция</a></li>
+                <li><a href="gallery.html">Галерия</a></li>
+                <li><a href="contact.html">Контакти</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="page-header">
+        <h1>За стопанството</h1>
+        <p>Историята на нашата пчелна ферма, традиции и философия</p>
+    </div>
+    <section>
+        <div class="container">
+            <div class="story fade-in">
+                <img src="https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=600&q=80" alt="Пчелин в планината">
+                <div class="story-text">
+                    <h2>Нашата история</h2>
+                    <p>Пчелна ферма "Златен кошер" е основана през 1992 г. от дядо Иван Медаров в подножието на Стара планина, край село Боженци. Започнахме с едва 10 кошера и голяма мечта.</p>
+                    <p>Днес стопанството наброява над 200 пчелни семейства, разположени в няколко пчелина из най-чистите кътчета на Габровския балкан.</p>
+                </div>
+            </div>
+            <div class="story reverse fade-in">
+                <img src="https://images.unsplash.com/photo-1471943311424-646960669fbc?w=600&q=80" alt="Мед и восък">
+                <div class="story-text">
+                    <h2>Философия и ценности</h2>
+                    <p>Вярваме, че най-добрият мед се получава, когато пчелите живеят в хармония с природата. Не използваме химикали и антибиотици. Всеки наш продукт е резултат от уважение към пчелите и околната среда.</p>
+                    <p>Семейните ни традиции се предават от поколение на поколение, обогатявани с нови знания и опит.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="methods-bg">
+        <div class="container">
+            <h2 class="section-title">Нашите методи</h2>
+            <div class="methods-grid fade-in">
+                <div class="method-card">
+                    <div class="method-icon">&#127806;</div>
+                    <h3>Екологично чист район</h3>
+                    <p>Пчелините ни са разположени далеч от замърсявания, в защитени природни зони.</p>
+                </div>
+                <div class="method-card">
+                    <div class="method-icon">&#128029;</div>
+                    <h3>Грижа за пчелите</h3>
+                    <p>Всяко семейство получава индивидуално внимание и грижа през цялата година.</p>
+                </div>
+                <div class="method-card">
+                    <div class="method-icon">&#127858;</div>
+                    <h3>Ръчна обработка</h3>
+                    <p>Медът се центрофугира и филтрира внимателно, без термична обработка.</p>
+                </div>
+                <div class="method-card">
+                    <div class="method-icon">&#9989;</div>
+                    <h3>Сертифицирано качество</h3>
+                    <p>Продуктите ни са сертифицирани и преминават редовен лабораторен контрол.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="container">
+            <h2 class="section-title">Нашият път</h2>
+            <div class="timeline fade-in">
+                <div class="timeline-item"><h3>1992</h3><p>Дядо Иван основава стопанството с 10 кошера в село Боженци.</p></div>
+                <div class="timeline-item"><h3>2000</h3><p>Разширяваме пчелина до 50 семейства. Първи участия на местни панаири.</p></div>
+                <div class="timeline-item"><h3>2008</h3><p>Второ поколение поема стопанството. Въвеждаме съвременни методи.</p></div>
+                <div class="timeline-item"><h3>2015</h3><p>Достигаме 150 кошера. Получаваме био сертификат.</p></div>
+                <div class="timeline-item"><h3>2020</h3><p>Стартираме онлайн продажби и доставки в цялата страна.</p></div>
+                <div class="timeline-item"><h3>2025</h3><p>Над 200 пчелни семейства, партньорства с ресторанти и магазини за здравословни храни.</p></div>
+            </div>
+        </div>
+    </section>
+    <section style="background: white;">
+        <div class="container">
+            <h2 class="section-title">Нашият екип</h2>
+            <div class="team-grid fade-in">
+                <div class="team-card">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80" alt="Петър Медаров">
+                    <h3>Петър Медаров</h3>
+                    <p class="role">Главен пчелар</p>
+                    <p>Наследник на традицията, с над 20 години опит в пчеларството.</p>
+                </div>
+                <div class="team-card">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&q=80" alt="Мария Медарова">
+                    <h3>Мария Медарова</h3>
+                    <p class="role">Управление и продажби</p>
+                    <p>Грижи се за клиентите и развитието на стопанството.</p>
+                </div>
+                <div class="team-card">
+                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&q=80" alt="Иван Медаров">
+                    <h3>Дядо Иван</h3>
+                    <p class="role">Основател и съветник</p>
+                    <p>Основателят, който все още споделя мъдростта си с младото поколение.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>Златен кошер</h4>
+                <p>Семейна пчелна ферма от 1992 г. Натурален мед и пчелни продукти от сърцето на България.</p>
+                <div class="social-icons"><span>FB</span><span>IG</span><span>YT</span></div>
+            </div>
+            <div class="footer-col">
+                <h4>Навигация</h4>
+                <a href="index.html">Начало</a><a href="about.html">За стопанството</a>
+                <a href="products.html">Продукция</a><a href="gallery.html">Галерия</a><a href="contact.html">Контакти</a>
+            </div>
+            <div class="footer-col">
+                <h4>Контакти</h4>
+                <p>с. Боженци, общ. Габрово</p><p>Тел: +359 888 123 456</p><p>Email: info@zlatenkosher.bg</p>
+                <p>Работно време: Пон-Съб 8:00-18:00</p>
+            </div>
+        </div>
+        <div class="footer-bottom">&copy; 2026 Пчелна ферма "Златен кошер". Всички права запазени.</div>
+    </footer>
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+        }, { threshold: 0.15 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Контакти - БиоДолина</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'DM Sans', sans-serif; color: #004D40; background: #FAFAFA; }
+        h1, h2, h3, h4 { font-family: 'Nunito Sans', sans-serif; }
+        a { text-decoration: none; color: inherit; }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-up { animation: fadeInUp 0.7s ease both; }
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255,255,255,0.97);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-shadow: 0 1px 20px rgba(0,77,64,0.08);
+        }
+        .nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 70px;
+        }
+        .logo { font-family: 'Nunito Sans', sans-serif; font-weight: 800; font-size: 1.5rem; color: #00BFA5; }
+        .logo span { color: #004D40; }
+        .nav-links { display: flex; gap: 28px; list-style: none; }
+        .nav-links a {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #004D40;
+            transition: color 0.3s;
+            position: relative;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #00BFA5;
+            transition: width 0.3s;
+        }
+        .nav-links a:hover::after,
+        .nav-links a.active::after { width: 100%; }
+        .nav-links a:hover,
+        .nav-links a.active { color: #00BFA5; }
+        .menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #004D40;
+            cursor: pointer;
+        }
+        .page-hero {
+            margin-top: 70px;
+            height: 40vh;
+            min-height: 280px;
+            background: linear-gradient(135deg, rgba(0,77,64,0.6), rgba(0,191,165,0.3)),
+                url('https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=1400&q=80') center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #fff;
+        }
+        .page-hero h1 { font-size: 2.8rem; font-weight: 800; }
+        .page-hero p { font-size: 1.1rem; margin-top: 12px; opacity: 0.9; }
+        .contact-section {
+            padding: 70px 24px;
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: start;
+        }
+        .form-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 35px rgba(0,77,64,0.08);
+        }
+        .form-card h2 { font-size: 1.6rem; margin-bottom: 6px; }
+        .form-card .sub {
+            color: #26A69A;
+            font-size: 0.95rem;
+            margin-bottom: 28px;
+        }
+        .form-group { margin-bottom: 20px; }
+        .form-group label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 7px;
+            color: #004D40;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 13px 16px;
+            border: 2px solid #E0F2F1;
+            border-radius: 10px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+            color: #004D40;
+            background: #FAFAFA;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            outline: none;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #00BFA5;
+            box-shadow: 0 0 0 3px rgba(0,191,165,0.12);
+            background: #fff;
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        .form-group select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M6 8L1 3h10z' fill='%2326A69A'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+        }
+        .btn-submit {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(135deg, #00BFA5, #26A69A);
+            color: #fff;
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-submit:hover {
+            background: linear-gradient(135deg, #00E676, #00BFA5);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,191,165,0.3);
+        }
+        .info-side h2 { font-size: 1.6rem; margin-bottom: 24px; }
+        .info-item {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 24px;
+            align-items: flex-start;
+        }
+        .info-icon {
+            width: 48px;
+            height: 48px;
+            min-width: 48px;
+            background: #E0F2F1;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            color: #00BFA5;
+        }
+        .info-item h4 { font-size: 0.95rem; margin-bottom: 3px; }
+        .info-item p { font-size: 0.88rem; color: #555; line-height: 1.5; }
+        .map-wrap {
+            margin-top: 28px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,77,64,0.08);
+        }
+        .map-wrap iframe {
+            width: 100%;
+            height: 260px;
+            border: none;
+        }
+        .hours {
+            background: #E0F2F1;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 24px;
+        }
+        .hours h4 {
+            font-size: 0.95rem;
+            margin-bottom: 10px;
+            color: #004D40;
+        }
+        .hours p {
+            font-size: 0.88rem;
+            color: #333;
+            line-height: 1.7;
+        }
+        .delivery-info {
+            background: #fff;
+            border: 2px solid #E0F2F1;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 24px;
+        }
+        .delivery-info h4 {
+            font-size: 0.95rem;
+            margin-bottom: 10px;
+            color: #00BFA5;
+        }
+        .delivery-info p {
+            font-size: 0.88rem;
+            color: #333;
+            line-height: 1.7;
+        }
+        footer { background: #004D40; color: #80CBC4; padding: 50px 24px 30px; }
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 36px;
+        }
+        .footer-col h4 {
+            color: #fff;
+            font-size: 1.1rem;
+            margin-bottom: 16px;
+            font-family: 'Nunito Sans', sans-serif;
+        }
+        .footer-col p,
+        .footer-col a {
+            font-size: 0.9rem;
+            line-height: 1.8;
+            display: block;
+            color: #80CBC4;
+            transition: color 0.3s;
+        }
+        .footer-col a:hover { color: #00E676; }
+        .footer-bottom {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(128,203,196,0.2);
+            font-size: 0.85rem;
+        }
+        .success-msg {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+        }
+        .success-msg h3 {
+            color: #00BFA5;
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+        .success-msg p { color: #555; }
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: #fff;
+                flex-direction: column;
+                padding: 20px;
+                gap: 16px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            }
+            .nav-links.open { display: flex; }
+            .menu-btn { display: block; }
+            .page-hero h1 { font-size: 2rem; }
+            .contact-section {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            .form-card { padding: 28px 22px; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-inner">
+            <a href="index.html" class="logo">Био<span>Долина</span></a>
+            <button class="menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('open')">&#9776;</button>
+            <ul class="nav-links">
+                <li><a href="index.html">Начало</a></li>
+                <li><a href="about.html">За стопанството</a></li>
+                <li><a href="products.html">Продукция</a></li>
+                <li><a href="gallery.html">Галерия</a></li>
+                <li><a href="contact.html" class="active">Контакти</a></li>
+            </ul>
+        </div>
+    </nav>
+    <section class="page-hero">
+        <div class="fade-up">
+            <h1>Свържете се с нас</h1>
+            <p>Направете запитване или поръчайте вашата био кошница</p>
+        </div>
+    </section>
+    <section class="contact-section">
+        <div class="form-card fade-up">
+            <h2>Направете запитване</h2>
+            <p class="sub">Попълнете формата и ще се свържем с вас до 24 часа</p>
+            <form id="contactForm" onsubmit="handleSubmit(event)">
+                <div class="form-group">
+                    <label for="name">Име и фамилия *</label>
+                    <input type="text" id="name" name="name" placeholder="Вашето име" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Телефон *</label>
+                    <input type="tel" id="phone" name="phone" placeholder="+359 ..." required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Имейл адрес *</label>
+                    <input type="email" id="email" name="email" placeholder="vashiat@email.bg" required>
+                </div>
+                <div class="form-group">
+                    <label for="inquiry">Тип запитване</label>
+                    <select id="inquiry" name="inquiry">
+                        <option value="" disabled selected>Изберете тип запитване</option>
+                        <option value="order">Поръчка</option>
+                        <option value="subscription">Абонаментна кошница</option>
+                        <option value="visit">Посещение на фермата</option>
+                        <option value="partnership">Сътрудничество с магазин</option>
+                        <option value="other">Друго</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="message">Съобщение *</label>
+                    <textarea id="message" name="message" placeholder="Напишете вашето запитване тук..." required></textarea>
+                </div>
+                <button type="submit" class="btn-submit">Изпратете запитване</button>
+            </form>
+            <div class="success-msg" id="successMsg">
+                <h3>Благодарим ви!</h3>
+                <p>Вашето запитване беше изпратено успешно. Ще се свържем с вас в рамките на 24 часа.</p>
+            </div>
+        </div>
+        <div class="info-side fade-up" style="animation-delay:0.2s">
+            <h2>Информация за контакт</h2>
+            <div class="info-item">
+                <div class="info-icon">&#128205;</div>
+                <div>
+                    <h4>Адрес</h4>
+                    <p>с. Добринище, ул. „Пирин" 15<br>общ. Банско, обл. Благоевград<br>2777, България</p>
+                </div>
+            </div>
+            <div class="info-item">
+                <div class="info-icon">&#128222;</div>
+                <div>
+                    <h4>Телефон</h4>
+                    <p>+359 888 123 456<br>+359 749 8 12 34</p>
+                </div>
+            </div>
+            <div class="info-item">
+                <div class="info-icon">&#9993;</div>
+                <div>
+                    <h4>Имейл</h4>
+                    <p>bio@biodolina.bg<br>orders@biodolina.bg</p>
+                </div>
+            </div>
+            <div class="info-item">
+                <div class="info-icon">&#127760;</div>
+                <div>
+                    <h4>Социални мрежи</h4>
+                    <p>Facebook: /biodolina<br>Instagram: @biodolina_bg</p>
+                </div>
+            </div>
+            <div class="hours">
+                <h4>Работно време</h4>
+                <p>Понеделник - Петък: 08:00 - 18:00<br>
+                Събота: 08:00 - 14:00<br>
+                Неделя: почивен ден<br><br>
+                Посещения на фермата - само с предварителна уговорка.</p>
+            </div>
+            <div class="delivery-info">
+                <h4>Доставки</h4>
+                <p>Доставяме в Банско, Благоевград и София.
+                Безплатна доставка за поръчки над 80 лв.
+                Абонаментни кошници - всяка сряда и събота.</p>
+            </div>
+            <div class="map-wrap">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d23661.04567!2d23.55!3d41.82!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14aae4c5e4c5e4c5%3A0x400a01269bf5e60!2z0JTQvtCx0YDQuNC90LjRidC1!5e0!3m2!1sbg!2sbg!4v1700000000000"
+                    allowfullscreen=""
+                    loading="lazy">
+                </iframe>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-col">
+                <h4>БиоДолина</h4>
+                <p>Сертифицирано био стопанство в района на Банско, Пиринско. EU Bio сертификат BG-BIO-001.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Навигация</h4>
+                <a href="index.html">Начало</a>
+                <a href="about.html">За стопанството</a>
+                <a href="products.html">Продукция</a>
+                <a href="gallery.html">Галерия</a>
+                <a href="contact.html">Контакти</a>
+            </div>
+            <div class="footer-col">
+                <h4>Контакти</h4>
+                <p>с. Добринище, общ. Банско</p>
+                <p>тел: +359 888 123 456</p>
+                <p>bio@biodolina.bg</p>
+            </div>
+            <div class="footer-col">
+                <h4>Последвайте ни</h4>
+                <a href="#">Facebook</a>
+                <a href="#">Instagram</a>
+                <a href="#">YouTube</a>
+            </div>
+        </div>
+        <div class="footer-bottom">&copy; 2026 БиоДолина. Всички права запазени. Сертифицирано био стопанство.</div>
+    </footer>
+    <script>
+        function handleSubmit(e) {
+            e.preventDefault();
+            document.getElementById('contactForm').style.display = 'none';
+            document.getElementById('successMsg').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

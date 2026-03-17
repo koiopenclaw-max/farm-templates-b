@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ферми България — Колекция Б | Смели</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        header {
+            text-align: center;
+            padding: 80px 20px 40px;
+            position: relative;
+        }
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 400px;
+            background: radial-gradient(ellipse at center top, rgba(76, 175, 80, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .badge {
+            display: inline-block;
+            padding: 6px 18px;
+            border: 1px solid rgba(76, 175, 80, 0.4);
+            border-radius: 30px;
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #4CAF50;
+            margin-bottom: 24px;
+            animation: fadeDown 0.8s ease both;
+        }
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 16px;
+            animation: fadeDown 0.8s ease 0.2s both;
+        }
+        h1 span {
+            background: linear-gradient(135deg, #4CAF50, #81C784, #A5D6A7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .subtitle {
+            font-size: 1.1rem;
+            color: #888;
+            max-width: 600px;
+            margin: 0 auto 20px;
+            font-weight: 300;
+            animation: fadeDown 0.8s ease 0.4s both;
+        }
+        .count {
+            font-size: 0.9rem;
+            color: #666;
+            animation: fadeDown 0.8s ease 0.5s both;
+        }
+        .count strong { color: #4CAF50; font-weight: 600; }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 28px;
+            max-width: 1200px;
+            margin: 50px auto 80px;
+            padding: 0 24px;
+        }
+        .card {
+            background: #141414;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid #222;
+            transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+            animation: fadeUp 0.7s ease both;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+        .card:nth-child(4) { animation-delay: 0.4s; }
+        .card:nth-child(5) { animation-delay: 0.5s; }
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+        }
+        .card:nth-child(1):hover { border-color: #F0A500; }
+        .card:nth-child(2):hover { border-color: #43A047; }
+        .card:nth-child(3):hover { border-color: #8E24AA; }
+        .card:nth-child(4):hover { border-color: #E64A19; }
+        .card:nth-child(5):hover { border-color: #00BFA5; }
+        .card-img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        .card:hover .card-img { transform: scale(1.05); }
+        .card-img-wrap { overflow: hidden; position: relative; }
+        .card-tag {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .card:nth-child(1) .card-tag { background: rgba(240,165,0,0.9); color: #3E2723; }
+        .card:nth-child(2) .card-tag { background: rgba(67,160,71,0.9); color: #fff; }
+        .card:nth-child(3) .card-tag { background: rgba(142,36,170,0.9); color: #fff; }
+        .card:nth-child(4) .card-tag { background: rgba(230,74,25,0.9); color: #fff; }
+        .card:nth-child(5) .card-tag { background: rgba(0,191,165,0.9); color: #fff; }
+        .card-body { padding: 24px; }
+        .card-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .card-desc {
+            font-size: 0.9rem;
+            color: #888;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 16px;
+            border-top: 1px solid #222;
+        }
+        .card-fonts {
+            font-size: 0.75rem;
+            color: #555;
+        }
+        .card-arrow {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            transition: background 0.3s, transform 0.3s;
+        }
+        .card:nth-child(1) .card-arrow { background: rgba(240,165,0,0.15); color: #F0A500; }
+        .card:nth-child(2) .card-arrow { background: rgba(67,160,71,0.15); color: #43A047; }
+        .card:nth-child(3) .card-arrow { background: rgba(142,36,170,0.15); color: #8E24AA; }
+        .card:nth-child(4) .card-arrow { background: rgba(230,74,25,0.15); color: #E64A19; }
+        .card:nth-child(5) .card-arrow { background: rgba(0,191,165,0.15); color: #00BFA5; }
+        .card:hover .card-arrow { transform: translateX(4px); }
+        .pages-info {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 12px;
+        }
+        .page-dot {
+            font-size: 0.7rem;
+            padding: 2px 10px;
+            border-radius: 10px;
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            color: #666;
+        }
+        footer {
+            text-align: center;
+            padding: 40px 20px 50px;
+            border-top: 1px solid #1a1a1a;
+            color: #444;
+            font-size: 0.8rem;
+        }
+        footer a { color: #4CAF50; text-decoration: none; }
+        @keyframes fadeDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @media (max-width: 768px) {
+            header { padding: 50px 16px 30px; }
+            .grid { grid-template-columns: 1fr; gap: 20px; padding: 0 16px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="badge">Колекция Б — Смели</div>
+        <h1>Ферми <span>България</span></h1>
+        <p class="subtitle">Пет уникални уебсайта за български стопанства — от пчелини до био ферми, от лавандулови полета до ранчота.</p>
+        <p class="count"><strong>5</strong> сайта &middot; <strong>25</strong> страници &middot; <strong>100%</strong> на български</p>
+    </header>
+
+    <div class="grid">
+        <a href="site-1-honey/index.html" class="card">
+            <div class="card-img-wrap">
+                <img src="https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?w=600&h=400&fit=crop" alt="Пчелна ферма" class="card-img">
+                <span class="card-tag">Пчелин</span>
+            </div>
+            <div class="card-body">
+                <h2 class="card-title">Златна Пчелна Ферма</h2>
+                <p class="card-desc">Пчелна ферма в сърцето на България. Натурален мед, прополис и пчелни продукти с вековна традиция.</p>
+                <div class="pages-info">
+                    <span class="page-dot">Начало</span>
+                    <span class="page-dot">За нас</span>
+                    <span class="page-dot">Продукция</span>
+                    <span class="page-dot">Галерия</span>
+                    <span class="page-dot">Контакти</span>
+                </div>
+                <div class="card-meta">
+                    <span class="card-fonts">Amatic SC + Lora</span>
+                    <span class="card-arrow">&rarr;</span>
+                </div>
+            </div>
+        </a>
+
+        <a href="site-2-greenhouse/index.html" class="card">
+            <div class="card-img-wrap">
+                <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=600&h=400&fit=crop" alt="Оранжерия" class="card-img">
+                <span class="card-tag">Оранжерии</span>
+            </div>
+            <div class="card-body">
+                <h2 class="card-title">Зелена Оранжерия</h2>
+                <p class="card-desc">Модерни оранжерии за целогодишно производство на пресни зеленчуци с хидропонни и капкови системи.</p>
+                <div class="pages-info">
+                    <span class="page-dot">Начало</span>
+                    <span class="page-dot">За нас</span>
+                    <span class="page-dot">Продукция</span>
+                    <span class="page-dot">Галерия</span>
+                    <span class="page-dot">Контакти</span>
+                </div>
+                <div class="card-meta">
+                    <span class="card-fonts">Outfit + Inter</span>
+                    <span class="card-arrow">&rarr;</span>
+                </div>
+            </div>
+        </a>
+
+        <a href="site-3-lavender/index.html" class="card">
+            <div class="card-img-wrap">
+                <img src="https://images.unsplash.com/photo-1499002238440-d264edd596ec?w=600&h=400&fit=crop" alt="Лавандулова ферма" class="card-img">
+                <span class="card-tag">Лавандула</span>
+            </div>
+            <div class="card-body">
+                <h2 class="card-title">Лавандулови Полета</h2>
+                <p class="card-desc">Лавандулова ферма в Розовата долина. Етерични масла, хидролати и натурална козметика от българска лавандула.</p>
+                <div class="pages-info">
+                    <span class="page-dot">Начало</span>
+                    <span class="page-dot">За нас</span>
+                    <span class="page-dot">Продукция</span>
+                    <span class="page-dot">Галерия</span>
+                    <span class="page-dot">Контакти</span>
+                </div>
+                <div class="card-meta">
+                    <span class="card-fonts">Cormorant Infant + Mulish</span>
+                    <span class="card-arrow">&rarr;</span>
+                </div>
+            </div>
+        </a>
+
+        <a href="site-4-ranch/index.html" class="card">
+            <div class="card-img-wrap">
+                <img src="https://images.unsplash.com/photo-1500595046743-cd271d694d30?w=600&h=400&fit=crop" alt="Ранчо" class="card-img">
+                <span class="card-tag">Ранчо</span>
+            </div>
+            <div class="card-body">
+                <h2 class="card-title">Тракийско Ранчо</h2>
+                <p class="card-desc">Животновъдно стопанство с говеда, коне и овце. Свободно отглеждане в просторни пасища на Тракийската низина.</p>
+                <div class="pages-info">
+                    <span class="page-dot">Начало</span>
+                    <span class="page-dot">За нас</span>
+                    <span class="page-dot">Продукция</span>
+                    <span class="page-dot">Галерия</span>
+                    <span class="page-dot">Контакти</span>
+                </div>
+                <div class="card-meta">
+                    <span class="card-fonts">Teko + Cabin</span>
+                    <span class="card-arrow">&rarr;</span>
+                </div>
+            </div>
+        </a>
+
+        <a href="site-5-organic/index.html" class="card">
+            <div class="card-img-wrap">
+                <img src="https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=600&h=400&fit=crop" alt="Био ферма" class="card-img">
+                <span class="card-tag">Био</span>
+            </div>
+            <div class="card-body">
+                <h2 class="card-title">Чиста Земя Био</h2>
+                <p class="card-desc">Сертифицирано био стопанство. Зеленчуци, плодове и билки без пестициди и ГМО, с EU органичен сертификат.</p>
+                <div class="pages-info">
+                    <span class="page-dot">Начало</span>
+                    <span class="page-dot">За нас</span>
+                    <span class="page-dot">Продукция</span>
+                    <span class="page-dot">Галерия</span>
+                    <span class="page-dot">Контакти</span>
+                </div>
+                <div class="card-meta">
+                    <span class="card-fonts">Nunito Sans + DM Sans</span>
+                    <span class="card-arrow">&rarr;</span>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Ферми България — Колекция Б | Изработено с <a href="#">любов към земята</a></p>
+    </footer>
+</body>
+</html>

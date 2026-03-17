@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>За стопанството - Лавандула БГ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Infant:wght@300;400;600;700&family=Mulish:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Mulish', sans-serif; color: #311B92; background: #FFFDE7; }
+        h1, h2, h3, h4 { font-family: 'Cormorant Infant', serif; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in { animation: fadeInUp 1s ease forwards; opacity: 0; }
+        .fade-in-d1 { animation-delay: 0.2s; }
+        .fade-in-d2 { animation-delay: 0.4s; }
+        nav { position: fixed; top: 0; width: 100%; z-index: 1000; background: rgba(49,27,146,0.92); backdrop-filter: blur(8px); padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; height: 70px; animation: slideDown 0.8s ease; }
+        .logo { font-family: 'Cormorant Infant', serif; font-size: 1.6rem; color: #FFF8E1; font-weight: 700; text-decoration: none; }
+        .logo span { color: #CE93D8; }
+        .nav-links { list-style: none; display: flex; gap: 1.8rem; }
+        .nav-links a { color: #FFF8E1; text-decoration: none; font-size: 0.95rem; transition: color 0.3s; position: relative; }
+        .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: #CE93D8; transition: width 0.3s; }
+        .nav-links a:hover { color: #CE93D8; }
+        .nav-links a:hover::after { width: 100%; }
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+        .hamburger span { width: 28px; height: 2px; background: #FFF8E1; transition: 0.3s; }
+        .page-hero { height: 55vh; background: linear-gradient(rgba(49,27,146,0.4), rgba(106,27,154,0.55)), url('https://images.unsplash.com/photo-1530099486328-e021101a494a?w=1600&q=80') center/cover no-repeat; display: flex; align-items: center; justify-content: center; text-align: center; color: #FFF8E1; }
+        .page-hero h1 { font-size: 3.5rem; animation: fadeInUp 1s ease; }
+        .page-hero p { font-size: 1.2rem; margin-top: 0.8rem; font-weight: 300; animation: fadeInUp 1s ease 0.3s forwards; opacity: 0; }
+        .section { padding: 5rem 2rem; max-width: 1100px; margin: 0 auto; }
+        .story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; margin-bottom: 4rem; }
+        .story-grid.reverse { direction: rtl; }
+        .story-grid.reverse > * { direction: ltr; }
+        .story-img { border-radius: 16px; overflow: hidden; box-shadow: 0 12px 40px rgba(106,27,154,0.18); }
+        .story-img img { width: 100%; height: 350px; object-fit: cover; transition: transform 0.6s; }
+        .story-img:hover img { transform: scale(1.05); }
+        .story-text h2 { font-size: 2.2rem; color: #6A1B9A; margin-bottom: 1rem; }
+        .story-text p { line-height: 1.8; color: #4A148C; margin-bottom: 1rem; font-size: 0.98rem; }
+        .timeline { background: linear-gradient(135deg, #F3E5F5, #EDE7F6); padding: 5rem 2rem; }
+        .timeline-title { text-align: center; font-size: 2.6rem; color: #6A1B9A; margin-bottom: 3rem; }
+        .timeline-items { max-width: 800px; margin: 0 auto; position: relative; }
+        .timeline-items::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 3px; background: linear-gradient(#CE93D8, #6A1B9A); transform: translateX(-50%); }
+        .timeline-item { display: flex; margin-bottom: 2.5rem; position: relative; }
+        .timeline-item:nth-child(odd) { justify-content: flex-start; padding-right: 55%; }
+        .timeline-item:nth-child(even) { justify-content: flex-end; padding-left: 55%; }
+        .timeline-item::before { content: ''; position: absolute; left: 50%; top: 18px; width: 16px; height: 16px; background: #8E24AA; border: 3px solid #FFF8E1; border-radius: 50%; transform: translateX(-50%); z-index: 1; }
+        .timeline-content { background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(106,27,154,0.12); transition: transform 0.3s; }
+        .timeline-content:hover { transform: translateY(-5px); }
+        .timeline-content h3 { color: #8E24AA; font-size: 1.3rem; margin-bottom: 0.3rem; }
+        .timeline-content .year { color: #AB47BC; font-weight: 700; font-size: 0.9rem; }
+        .timeline-content p { color: #4A148C; font-size: 0.92rem; line-height: 1.6; margin-top: 0.5rem; }
+        .distill { background: linear-gradient(135deg, #311B92, #6A1B9A); color: #FFF8E1; padding: 5rem 2rem; }
+        .distill-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; max-width: 1100px; margin: 0 auto; }
+        .distill h2 { text-align: center; font-size: 2.6rem; color: #E1BEE7; margin-bottom: 1rem; }
+        .distill-sub { text-align: center; color: #B39DDB; margin-bottom: 3rem; font-size: 1.05rem; }
+        .step { background: rgba(255,248,225,0.08); border: 1px solid rgba(225,190,231,0.25); border-radius: 16px; padding: 2rem; text-align: center; transition: all 0.4s; }
+        .step:hover { background: rgba(255,248,225,0.15); transform: translateY(-5px); }
+        .step-num { font-family: 'Cormorant Infant', serif; font-size: 3rem; color: #CE93D8; font-weight: 700; }
+        .step h3 { color: #E1BEE7; font-size: 1.4rem; margin: 0.5rem 0; }
+        .step p { color: #B39DDB; line-height: 1.7; font-size: 0.93rem; }
+        .sustain { padding: 5rem 2rem; background: url('https://images.unsplash.com/photo-1494972308805-c0d06c240f00?w=1600&q=80') center/cover fixed; position: relative; }
+        .sustain::before { content: ''; position: absolute; inset: 0; background: rgba(106,27,154,0.75); }
+        .sustain-content { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; text-align: center; color: #FFF8E1; }
+        .sustain h2 { font-size: 2.6rem; margin-bottom: 1.5rem; }
+        .sustain p { font-size: 1.05rem; line-height: 1.9; margin-bottom: 1rem; }
+        footer { background: #1A0A3E; color: #E1BEE7; padding: 3rem 2rem 1.5rem; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2rem; max-width: 1200px; margin: 0 auto 2rem; }
+        .footer-brand h3 { font-family: 'Cormorant Infant', serif; font-size: 1.8rem; color: #CE93D8; margin-bottom: 0.8rem; }
+        .footer-brand p { font-size: 0.9rem; line-height: 1.7; color: #B39DDB; }
+        footer h4 { color: #CE93D8; font-size: 1.1rem; margin-bottom: 1rem; font-family: 'Cormorant Infant', serif; }
+        footer ul { list-style: none; }
+        footer ul li { margin-bottom: 0.6rem; }
+        footer ul a { color: #B39DDB; text-decoration: none; font-size: 0.9rem; transition: color 0.3s; }
+        footer ul a:hover { color: #FFF8E1; }
+        .social-links { display: flex; gap: 1rem; margin-top: 1rem; }
+        .social-links a { width: 40px; height: 40px; border-radius: 50%; border: 1px solid #CE93D8; display: flex; align-items: center; justify-content: center; color: #CE93D8; text-decoration: none; font-size: 0.85rem; transition: all 0.3s; }
+        .social-links a:hover { background: #CE93D8; color: #1A0A3E; }
+        .footer-bottom { text-align: center; padding-top: 1.5rem; border-top: 1px solid rgba(206,147,216,0.2); font-size: 0.85rem; color: #7E57C2; max-width: 1200px; margin: 0 auto; }
+        @media (max-width: 768px) {
+            .hamburger { display: flex; }
+            .nav-links { display: none; position: absolute; top: 70px; left: 0; width: 100%; background: rgba(49,27,146,0.97); flex-direction: column; padding: 2rem; gap: 1.2rem; }
+            .nav-links.active { display: flex; }
+            .page-hero h1 { font-size: 2.2rem; }
+            .story-grid, .story-grid.reverse { grid-template-columns: 1fr; direction: ltr; }
+            .distill-grid { grid-template-columns: 1fr; }
+            .timeline-item:nth-child(odd), .timeline-item:nth-child(even) { padding: 0 0 0 55%; justify-content: flex-start; }
+            .timeline-items::before { left: 20px; }
+            .timeline-item::before { left: 20px; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo">Лавандула<span>БГ</span></a>
+        <div class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('active')">
+            <span></span><span></span><span></span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Начало</a></li>
+            <li><a href="about.html">За стопанството</a></li>
+            <li><a href="products.html">Продукция</a></li>
+            <li><a href="gallery.html">Галерия</a></li>
+            <li><a href="contact.html">Контакти</a></li>
+        </ul>
+    </nav>
+
+    <section class="page-hero">
+        <div>
+            <h1>За стопанството</h1>
+            <p>Историята на нашата лавандулова ферма в сърцето на Розовата долина</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="story-grid fade-in">
+            <div class="story-img">
+                <img src="https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?w=800&q=80" alt="Лавандулово поле">
+            </div>
+            <div class="story-text">
+                <h2>Нашата история</h2>
+                <p>Историята на ЛавандулаБГ започва през далечната 1968 година, когато дядо Петър засажда първите лавандулови храсти в подножието на Стара планина, край село Розино, община Карлово.</p>
+                <p>Вдъхновен от вековната българска традиция в производството на етерични масла, той мечтае да създаде стопанство, което съчетава уважението към природата с качество от световна класа.</p>
+            </div>
+        </div>
+        <div class="story-grid reverse fade-in">
+            <div class="story-img">
+                <img src="https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=800&q=80" alt="Семейна традиция">
+            </div>
+            <div class="story-text">
+                <h2>Семейно наследство</h2>
+                <p>Днес фермата се управлява от третото поколение на семейството. Синът на дядо Петър, Иван, разширява стопанството до 30 хектара и въвежда модерни методи за дестилация.</p>
+                <p>Внуците Мария и Георги продължават традицията, добавяйки нови продуктови линии и отваряйки фермата за посетители, за да могат всички да се докоснат до магията на лавандулата.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="timeline">
+        <h2 class="timeline-title">Нашият път</h2>
+        <div class="timeline-items">
+            <div class="timeline-item fade-in">
+                <div class="timeline-content">
+                    <span class="year">1968</span>
+                    <h3>Началото</h3>
+                    <p>Дядо Петър засажда първите 2 хектара лавандула край Карлово.</p>
+                </div>
+            </div>
+            <div class="timeline-item fade-in fade-in-d1">
+                <div class="timeline-content">
+                    <span class="year">1985</span>
+                    <h3>Първа дестилерия</h3>
+                    <p>Изграждане на собствена дестилерия за парна дестилация на лавандулово масло.</p>
+                </div>
+            </div>
+            <div class="timeline-item fade-in">
+                <div class="timeline-content">
+                    <span class="year">2002</span>
+                    <h3>Ново поколение</h3>
+                    <p>Иван поема управлението и разширява полетата до 30 хектара.</p>
+                </div>
+            </div>
+            <div class="timeline-item fade-in fade-in-d1">
+                <div class="timeline-content">
+                    <span class="year">2015</span>
+                    <h3>Био сертификация</h3>
+                    <p>Получаване на био сертификат и начало на износа за Европа и Азия.</p>
+                </div>
+            </div>
+            <div class="timeline-item fade-in">
+                <div class="timeline-content">
+                    <span class="year">2020</span>
+                    <h3>Отваряне за посетители</h3>
+                    <p>Фермата отваря врати за туристи, фотосесии и корпоративни събития.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="distill">
+        <h2>Процесът на дестилация</h2>
+        <p class="distill-sub">От полето до бутилката - всяка капка масло минава през внимателен процес</p>
+        <div class="distill-grid">
+            <div class="step fade-in">
+                <div class="step-num">01</div>
+                <h3>Бране</h3>
+                <p>Лавандулата се бере ръчно в ранните сутрешни часове, когато концентрацията на етерични масла е най-висока. Използваме сърпове и специализирани ножици.</p>
+            </div>
+            <div class="step fade-in fade-in-d1">
+                <div class="step-num">02</div>
+                <h3>Парна дестилация</h3>
+                <p>Пресните стръкове се поставят в медни казани. Водната пара преминава през тях и извлича етеричните масла. Процесът трае около 2 часа.</p>
+            </div>
+            <div class="step fade-in fade-in-d2">
+                <div class="step-num">03</div>
+                <h3>Сепарация</h3>
+                <p>Парата се кондензира и маслото се отделя от лавандуловата вода (хидролат). И двата продукта са ценни и намират приложение в козметиката.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="sustain">
+        <div class="sustain-content fade-in">
+            <h2>Устойчивост и грижа за природата</h2>
+            <p>Вярваме, че качествената лавандула може да се отглежда само в хармония с природата. Затова използваме изцяло биологични методи на земеделие, без пестициди и синтетични торове.</p>
+            <p>Нашите полета са дом на стотици видове пчели и пеперуди. Работим с местни пчелари за производство на уникален лавандулов мед. Отпадъчната биомаса от дестилацията се компостира и връща в почвата.</p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h3>ЛавандулаБГ</h3>
+                <p>Семейна лавандулова ферма в Розовата долина. Отглеждаме, дестилираме и споделяме магията на българската лавандула от 1968 година.</p>
+                <div class="social-links">
+                    <a href="#">Fb</a><a href="#">Ig</a><a href="#">Yt</a>
+                </div>
+            </div>
+            <div>
+                <h4>Навигация</h4>
+                <ul>
+                    <li><a href="index.html">Начало</a></li>
+                    <li><a href="about.html">За стопанството</a></li>
+                    <li><a href="products.html">Продукция</a></li>
+                    <li><a href="gallery.html">Галерия</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Продукти</h4>
+                <ul>
+                    <li><a href="products.html">Етерично масло</a></li>
+                    <li><a href="products.html">Хидролат</a></li>
+                    <li><a href="products.html">Сушена лавандула</a></li>
+                    <li><a href="products.html">Козметика</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Контакти</h4>
+                <ul>
+                    <li><a href="tel:+35931234567">+359 312 345 67</a></li>
+                    <li><a href="mailto:info@lavandulabg.bg">info@lavandulabg.bg</a></li>
+                    <li><a href="contact.html">с. Розино, Карлово</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">&copy; 2026 ЛавандулаБГ. Всички права запазени.</div>
+    </footer>
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.style.animationPlayState = 'running'; } });
+        }, { threshold: 0.15 });
+        document.querySelectorAll('.fade-in').forEach(el => { el.style.animationPlayState = 'paused'; observer.observe(el); });
+    </script>
+</body>
+</html>

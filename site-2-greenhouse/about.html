@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>За стопанството - ЗеленоСтъкло</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; color: #1B5E20; background: #FFFFFF; }
+        h1, h2, h3, h4 { font-family: 'Outfit', sans-serif; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideInLeft { from { opacity: 0; transform: translateX(-40px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes slideInRight { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: translateX(0); } }
+        .fade-up { animation: fadeInUp 0.8s ease both; }
+        .slide-left { animation: slideInLeft 0.8s ease both; }
+        .slide-right { animation: slideInRight 0.8s ease both; }
+        nav { background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); padding: 0.8rem 2rem; display: flex; justify-content: space-between; align-items: center; position: fixed; width: 100%; top: 0; z-index: 1000; box-shadow: 0 2px 20px rgba(46,125,50,0.1); }
+        .logo { font-family: 'Outfit', sans-serif; font-size: 1.5rem; font-weight: 700; color: #2E7D32; text-decoration: none; }
+        .logo span { color: #66BB6A; }
+        .nav-links { display: flex; list-style: none; gap: 1.5rem; }
+        .nav-links a { text-decoration: none; color: #1B5E20; font-weight: 500; font-size: 0.95rem; transition: color 0.3s; position: relative; }
+        .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: #43A047; transition: width 0.3s; }
+        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+        .nav-links a:hover, .nav-links a.active { color: #43A047; }
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; }
+        .hamburger span { width: 25px; height: 2px; background: #1B5E20; transition: 0.3s; }
+        .page-hero { height: 50vh; background: linear-gradient(135deg, rgba(27,94,32,0.75), rgba(46,125,50,0.55)), url('https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?w=1600&q=80') center/cover; display: flex; align-items: center; justify-content: center; text-align: center; color: #fff; }
+        .page-hero h1 { font-size: 3rem; animation: fadeInUp 0.8s ease; text-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+        .page-hero p { font-size: 1.2rem; margin-top: 0.8rem; opacity: 0.9; animation: fadeInUp 1s ease; }
+        section { padding: 5rem 2rem; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .section-title { text-align: center; margin-bottom: 3rem; }
+        .section-title h2 { font-size: 2.5rem; color: #1B5E20; margin-bottom: 0.5rem; }
+        .section-title p { color: #43A047; font-size: 1.1rem; }
+        .history { background: #F1F8E9; }
+        .history-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+        .history-img { border-radius: 20px; overflow: hidden; box-shadow: 0 15px 40px rgba(46,125,50,0.15); }
+        .history-img img { width: 100%; height: 420px; object-fit: cover; transition: transform 0.5s; }
+        .history-img:hover img { transform: scale(1.05); }
+        .history-text h2 { font-size: 2rem; color: #1B5E20; margin-bottom: 1rem; }
+        .history-text p { line-height: 1.8; color: #2E7D32; margin-bottom: 1rem; font-size: 0.98rem; }
+        .tech-section { background: #fff; }
+        .tech-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+        .tech-card { background: #E8F5E9; padding: 2.2rem; border-radius: 16px; text-align: center; transition: transform 0.3s, box-shadow 0.3s; border: 1px solid rgba(102,187,106,0.2); }
+        .tech-card:hover { transform: translateY(-8px); box-shadow: 0 15px 40px rgba(46,125,50,0.15); }
+        .tech-icon { font-size: 2.8rem; margin-bottom: 1rem; }
+        .tech-card h3 { color: #1B5E20; margin-bottom: 0.6rem; font-size: 1.2rem; }
+        .tech-card p { color: #2E7D32; font-size: 0.95rem; line-height: 1.7; }
+        .sustainability { background: #F1F8E9; }
+        .sustain-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+        .sustain-list { list-style: none; }
+        .sustain-list li { padding: 0.8rem 0; border-bottom: 1px solid rgba(46,125,50,0.1); color: #2E7D32; font-size: 0.98rem; display: flex; align-items: center; gap: 0.8rem; }
+        .sustain-list li::before { content: '\2713'; color: #43A047; font-weight: 700; font-size: 1.2rem; }
+        .team-section { background: #fff; }
+        .team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
+        .team-card { text-align: center; transition: transform 0.3s; }
+        .team-card:hover { transform: translateY(-5px); }
+        .team-card img { width: 140px; height: 140px; border-radius: 50%; object-fit: cover; border: 4px solid #66BB6A; margin-bottom: 1rem; }
+        .team-card h3 { color: #1B5E20; font-size: 1.1rem; margin-bottom: 0.3rem; }
+        .team-card p { color: #43A047; font-size: 0.9rem; }
+        footer { background: #1B5E20; color: #E8F5E9; padding: 3rem 2rem 1.5rem; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2rem; max-width: 1200px; margin: 0 auto; }
+        .footer-col h4 { font-family: 'Outfit', sans-serif; margin-bottom: 1rem; color: #66BB6A; }
+        .footer-col p, .footer-col a { color: #E8F5E9; text-decoration: none; font-size: 0.9rem; line-height: 1.8; display: block; }
+        .footer-col a:hover { color: #66BB6A; }
+        .footer-bottom { text-align: center; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(102,187,106,0.2); font-size: 0.85rem; max-width: 1200px; margin-left: auto; margin-right: auto; }
+        .social-links { display: flex; gap: 1rem; margin-top: 0.5rem; }
+        .social-links a { width: 36px; height: 36px; border-radius: 50%; background: rgba(102,187,106,0.2); display: flex; align-items: center; justify-content: center; color: #66BB6A; text-decoration: none; transition: background 0.3s; font-size: 0.85rem; font-weight: 600; }
+        .social-links a:hover { background: #43A047; color: #fff; }
+        @media (max-width: 768px) {
+            .hamburger { display: flex; }
+            .nav-links { display: none; position: absolute; top: 100%; left: 0; width: 100%; background: #fff; flex-direction: column; padding: 1rem 2rem; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+            .nav-links.active { display: flex; }
+            .page-hero h1 { font-size: 2rem; }
+            .history-grid, .sustain-grid { grid-template-columns: 1fr; }
+            .tech-grid { grid-template-columns: 1fr; }
+            .team-grid { grid-template-columns: 1fr 1fr; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo">Зелено<span>Стъкло</span></a>
+        <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('active')">
+            <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links">
+            <li><a href="index.html">Начало</a></li>
+            <li><a href="about.html" class="active">За стопанството</a></li>
+            <li><a href="products.html">Продукция</a></li>
+            <li><a href="gallery.html">Галерия</a></li>
+            <li><a href="contact.html">Контакти</a></li>
+        </ul>
+    </nav>
+    <section class="page-hero">
+        <div><h1>За стопанството</h1><p>Традиция, технологии и устойчивост от 2009 година</p></div>
+    </section>
+    <section class="history">
+        <div class="container">
+            <div class="history-grid">
+                <div class="history-img slide-left">
+                    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=800&q=80" alt="Нашата история">
+                </div>
+                <div class="history-text slide-right">
+                    <h2>Нашата история</h2>
+                    <p>ЗеленоСтъкло започва своята дейност през 2009 година като малко семейно стопанство с две оранжерии в село Брестник, край Пловдив. Основателят Георги Стоянов, агроном по образование, мечтае да създаде ферма, която да предлага пресни зеленчуци целогодишно.</p>
+                    <p>Днес стопанството разполага с 12 000 кв.м. покрита площ, 8 модерни оранжерии и екип от 35 специалисти. Годишно произвеждаме над 500 тона зеленчуци, които достигат до магазини, ресторанти и домакинства в цялата страна.</p>
+                    <p>През 2018 г. инвестирахме в пълна модернизация: автоматизирано управление на климата, LED осветление и хидропонни системи от ново поколение.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="tech-section">
+        <div class="container">
+            <div class="section-title"><h2>Нашите технологии</h2><p>Иновации за по-добър вкус и по-висока ефективност</p></div>
+            <div class="tech-grid">
+                <div class="tech-card fade-up">
+                    <div class="tech-icon">&#128167;</div>
+                    <h3>Хидропоника</h3>
+                    <p>Отглеждаме част от продукцията без почва, в хранителен разтвор. Това осигурява по-бърз растеж, по-високи добиви и намален разход на вода.</p>
+                </div>
+                <div class="tech-card fade-up" style="animation-delay:0.2s">
+                    <div class="tech-icon">&#127777;</div>
+                    <h3>Климатичен контрол</h3>
+                    <p>Автоматизирани системи следят температура, влажност и вентилация 24/7. Сензори в реално време коригират условията за оптимален растеж.</p>
+                </div>
+                <div class="tech-card fade-up" style="animation-delay:0.4s">
+                    <div class="tech-icon">&#128161;</div>
+                    <h3>LED осветление</h3>
+                    <p>Специализирано LED осветление допълва естествената светлина през зимните месеци и удължава фотосинтетичния период.</p>
+                </div>
+                <div class="tech-card fade-up" style="animation-delay:0.15s">
+                    <div class="tech-icon">&#127811;</div>
+                    <h3>Капково напояване</h3>
+                    <p>Прецизни системи доставят вода директно до корените. Пестим до 60% вода в сравнение с традиционните методи на поливане.</p>
+                </div>
+                <div class="tech-card fade-up" style="animation-delay:0.35s">
+                    <div class="tech-icon">&#129302;</div>
+                    <h3>Автоматизация</h3>
+                    <p>IoT сензори и софтуер за управление на целия процес от засаждане до прибиране на реколтата с минимална намеса.</p>
+                </div>
+                <div class="tech-card fade-up" style="animation-delay:0.55s">
+                    <div class="tech-icon">&#127807;</div>
+                    <h3>Биозащита</h3>
+                    <p>Използваме полезни насекоми и биологични средства за растителна защита вместо химически пестициди.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="sustainability">
+        <div class="container">
+            <div class="sustain-grid">
+                <div class="slide-left">
+                    <h2 style="font-size:2rem;color:#1B5E20;margin-bottom:1.5rem;">Устойчиви практики</h2>
+                    <p style="color:#2E7D32;line-height:1.8;margin-bottom:1.5rem;">Вярваме, че модерното земеделие трябва да бъде отговорно към околната среда. Нашите устойчиви практики:</p>
+                    <ul class="sustain-list">
+                        <li>Рециклиране на поливната вода в затворен цикъл</li>
+                        <li>Соларни панели за 40% от енергийните нужди</li>
+                        <li>Компостиране на растителните отпадъци</li>
+                        <li>Биоразградими опаковки за цялата продукция</li>
+                        <li>Минимален въглероден отпечатък при доставки</li>
+                        <li>Събиране и използване на дъждовна вода</li>
+                    </ul>
+                </div>
+                <div class="history-img slide-right">
+                    <img src="https://images.unsplash.com/photo-1611843467160-25afb8df1074?w=800&q=80" alt="Устойчивост" style="height:380px;">
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="team-section">
+        <div class="container">
+            <div class="section-title"><h2>Нашият екип</h2><p>Хората, които правят всичко възможно</p></div>
+            <div class="team-grid">
+                <div class="team-card fade-up">
+                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=300&q=80" alt="Георги Стоянов">
+                    <h3>Георги Стоянов</h3>
+                    <p>Основател и управител</p>
+                </div>
+                <div class="team-card fade-up" style="animation-delay:0.15s">
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=300&q=80" alt="Мария Иванова">
+                    <h3>Мария Иванова</h3>
+                    <p>Главен агроном</p>
+                </div>
+                <div class="team-card fade-up" style="animation-delay:0.3s">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&q=80" alt="Димитър Петров">
+                    <h3>Димитър Петров</h3>
+                    <p>Технически директор</p>
+                </div>
+                <div class="team-card fade-up" style="animation-delay:0.45s">
+                    <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=300&q=80" alt="Елена Тодорова">
+                    <h3>Елена Тодорова</h3>
+                    <p>Мениджър продажби</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>ЗеленоСтъкло</h4>
+                <p>Оранжерийно стопанство за производство на висококачествени зеленчуци в региона на Пловдив. Пресни продукти целогодишно.</p>
+                <div class="social-links"><a href="#">Fb</a><a href="#">Ig</a><a href="#">Yt</a></div>
+            </div>
+            <div class="footer-col">
+                <h4>Навигация</h4>
+                <a href="index.html">Начало</a><a href="about.html">За стопанството</a><a href="products.html">Продукция</a><a href="gallery.html">Галерия</a><a href="contact.html">Контакти</a>
+            </div>
+            <div class="footer-col">
+                <h4>Продукция</h4>
+                <a href="products.html">Домати</a><a href="products.html">Краставици</a><a href="products.html">Чушки</a><a href="products.html">Билки</a>
+            </div>
+            <div class="footer-col">
+                <h4>Контакти</h4>
+                <p>с. Брестник, община Родопи</p><p>4108 Пловдив, България</p><p>+359 32 123 456</p><p>info@zelenostaklo.bg</p>
+            </div>
+        </div>
+        <div class="footer-bottom"><p>&copy; 2026 ЗеленоСтъкло. Всички права запазени.</p></div>
+    </footer>
+</body>
+</html>

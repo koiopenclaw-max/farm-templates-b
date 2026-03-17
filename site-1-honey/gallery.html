@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Галерия - Пчелна ферма "Златен кошер"</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Lora', serif; color: #3E2723; background: #FFF8E1; }
+        a { text-decoration: none; color: inherit; }
+        h1, h2, h3, h4 { font-family: 'Amatic SC', cursive; }
+        nav { background: #3E2723; position: sticky; top: 0; z-index: 1000; }
+        .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; }
+        .nav-logo { font-family: 'Amatic SC', cursive; font-size: 1.8rem; color: #F0A500; padding: 15px 0; font-weight: 700; }
+        .nav-links { display: flex; list-style: none; gap: 5px; }
+        .nav-links a { color: #FFF8E1; padding: 20px 15px; display: block; font-size: 0.95rem; transition: background 0.3s, color 0.3s; }
+        .nav-links a:hover, .nav-links a.active { background: #F0A500; color: #3E2723; }
+        .menu-toggle { display: none; background: none; border: none; color: #F0A500; font-size: 1.8rem; cursor: pointer; }
+        @media (max-width: 768px) {
+            .menu-toggle { display: block; }
+            .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: #3E2723; }
+            .nav-links.open { display: flex; }
+            .nav-links a { padding: 15px 20px; border-top: 1px solid #5D4037; }
+        }
+        .page-header { background: linear-gradient(rgba(62,39,35,0.6), rgba(62,39,35,0.75)),
+            url('https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=1400&q=80') center/cover no-repeat;
+            padding: 100px 20px 60px; text-align: center; color: #FFF8E1; }
+        .page-header h1 { font-size: clamp(2.8rem, 7vw, 4.5rem); margin-bottom: 10px; animation: fadeInUp 1s ease; }
+        .page-header p { font-size: 1.1rem; opacity: 0.9; animation: fadeInUp 1s ease 0.2s both; }
+        section { padding: 60px 20px; }
+        .container { max-width: 1100px; margin: 0 auto; }
+        .section-title { font-size: 3rem; text-align: center; margin-bottom: 15px; }
+        .section-sub { text-align: center; color: #5D4037; margin-bottom: 40px; font-size: 1.05rem; }
+        /* Gallery Grid */
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 18px; }
+        .gallery-item { position: relative; border-radius: 12px; overflow: hidden; cursor: pointer;
+            box-shadow: 0 4px 15px rgba(62,39,35,0.12); aspect-ratio: 4/3; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .gallery-item:hover img { transform: scale(1.1); }
+        .gallery-overlay { position: absolute; inset: 0; background: linear-gradient(transparent 40%, rgba(62,39,35,0.8));
+            display: flex; align-items: flex-end; padding: 18px; opacity: 0; transition: opacity 0.4s; }
+        .gallery-item:hover .gallery-overlay { opacity: 1; }
+        .gallery-overlay p { color: #FFF8E1; font-size: 0.95rem; font-style: italic; }
+        /* Lightbox with checkbox hack */
+        .lightbox-toggle { display: none; }
+        .lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 2000; display: flex; align-items: center;
+            justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.4s; }
+        .lightbox-toggle:checked ~ .lightbox { opacity: 1; pointer-events: all; }
+        .lightbox img { max-width: 90vw; max-height: 85vh; border-radius: 8px; box-shadow: 0 0 40px rgba(240,165,0,0.3);
+            animation: zoomIn 0.4s ease; }
+        .lightbox-close { position: absolute; top: 20px; right: 30px; font-size: 2.5rem; color: #FFF8E1; cursor: pointer;
+            transition: color 0.3s; z-index: 2001; font-family: 'Amatic SC', cursive; }
+        .lightbox-close:hover { color: #F0A500; }
+        .lightbox-caption { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); color: #FFF8E1;
+            font-size: 1.1rem; text-align: center; font-style: italic; background: rgba(62,39,35,0.7); padding: 10px 25px; border-radius: 25px; }
+        @keyframes zoomIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        /* Quote */
+        .quote-section { background: #3E2723; color: #FFF8E1; text-align: center; padding: 60px 20px; }
+        .quote-section blockquote { font-size: 1.3rem; font-style: italic; max-width: 700px; margin: 0 auto 15px; line-height: 1.7; }
+        .quote-section cite { color: #F0A500; font-size: 1rem; }
+        /* Footer */
+        footer { background: #3E2723; color: #FFF8E1; padding: 40px 20px; }
+        .footer-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 30px; }
+        .footer-col h4 { font-family: 'Amatic SC', cursive; font-size: 1.8rem; color: #F0A500; margin-bottom: 12px; }
+        .footer-col p, .footer-col a { font-size: 0.9rem; line-height: 1.8; color: #FFF8E1; opacity: 0.8; display: block; }
+        .footer-col a:hover { opacity: 1; color: #F0A500; }
+        .social-icons { display: flex; gap: 12px; margin-top: 10px; }
+        .social-icons span { width: 38px; height: 38px; border-radius: 50%; border: 1px solid #F0A500; display: flex; align-items: center;
+            justify-content: center; font-size: 0.8rem; color: #F0A500; transition: all 0.3s; cursor: pointer; }
+        .social-icons span:hover { background: #F0A500; color: #3E2723; }
+        .footer-bottom { text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #5D4037; font-size: 0.85rem; opacity: 0.7; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in { opacity: 0; transform: translateY(25px); transition: opacity 0.8s ease, transform 0.8s ease; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">&#127855; Златен кошер</a>
+            <button class="menu-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">&#9776;</button>
+            <ul class="nav-links">
+                <li><a href="index.html">Начало</a></li>
+                <li><a href="about.html">За стопанството</a></li>
+                <li><a href="products.html">Продукция</a></li>
+                <li><a href="gallery.html" class="active">Галерия</a></li>
+                <li><a href="contact.html">Контакти</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="page-header">
+        <h1>Галерия</h1>
+        <p>Моменти от живота на нашия пчелин и красотата на природата</p>
+    </div>
+    <section>
+        <div class="container">
+            <h2 class="section-title">Нашият свят в снимки</h2>
+            <p class="section-sub">Разгледайте фотографии от ежедневието на пчелина, добива на мед и красивите пейзажи около нас.</p>
+            <div class="gallery-grid fade-in">
+                <!-- Photo 1 -->
+                <input type="checkbox" id="lb1" class="lightbox-toggle">
+                <label for="lb1" class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?w=500&q=80" alt="Пчели върху пита">
+                    <div class="gallery-overlay"><p>Пчели върху медена пита</p></div>
+                </label>
+                <div class="lightbox"><label for="lb1" class="lightbox-close">&times;</label>
+                    <img src="https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?w=1000&q=80" alt="Пчели върху пита">
+                    <div class="lightbox-caption">Пчели върху медена пита</div></div>
+                <!-- Photo 2 -->
+                <input type="checkbox" id="lb2" class="lightbox-toggle">
+                <label for="lb2" class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=500&q=80" alt="Кошери">
+                    <div class="gallery-overlay"><p>Нашите кошери в планината</p></div>
+                </label>
+                <div class="lightbox"><label for="lb2" class="lightbox-close">&times;</label>
+                    <img src="https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=1000&q=80" alt="Кошери">
+                    <div class="lightbox-caption">Нашите кошери в планината</div></div>
+                <!-- Photo 3 -->
+                <input type="checkbox" id="lb3" class="lightbox-toggle">
+                <label for="lb3" class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1471943311424-646960669fbc?w=500&q=80" alt="Буркани мед">
+                    <div class="gallery-overlay"><p>Прясно центрофугиран мед</p></div>
+                </label>
+                <div class="lightbox"><label for="lb3" class="lightbox-close">&times;</label>
+                    <img src="https://images.unsplash.com/photo-1471943311424-646960669fbc?w=1000&q=80" alt="Буркани мед">
+                    <div class="lightbox-caption">Прясно центрофугиран мед</div></div>
+                <!-- Photo 4 -->
+                <input type="checkbox" id="lb4" class="lightbox-toggle">
+                <label for="lb4" class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1607429620009-4442bab3fea1?w=500&q=80" alt="Пчелар">
+                    <div class="gallery-overlay"><p>Пчеларят проверява кошерите</p></div>
+                </label>
+                <div class="lightbox"><label for="lb4" class="lightbox-close">&times;</label>
+                    <img src="https://images.unsplash.com/photo-1607429620009-4442bab3fea1?w=1000&q=80" alt="Пчелар">
+                    <div class="lightbox-caption">Пчеларят проверява кошерите</div></div>
+                <!-- Photo 5 -->
+                <input type="checkbox" id="lb5" class="lightbox-toggle">
+                <label for="lb5" class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1586796676882-643a0e2e4c34?w=500&q=80" alt="Медена пита">
+                    <div class="gallery-overlay"><p>Запечатана медена пита</p></div>
+                </label>
+                <div class="lightbox"><label for="lb5" class="lightbox-close">&times;</label>
+                    <img src="https://images.unsplash.com/photo-1586796676882-643a0e2e4c34?w=1000&q=80" alt="Медена пита">
+                    <div class="lightbox-caption">Запечатана медена пита</div></div>
+                <!-- Photo 6 -->
+                <input type="checkbox" id="lb6" class="lightbox-toggle">
+                <label for="lb6" class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=500&q=80" alt="Пчела на цвете">
+                    <div class="gallery-overlay"><p>Пчела събира нектар</p></div>
+                </label>
+                <div class="lightbox"><label for="lb6" class="lightbox-close">&times;</label>
+                    <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=1000&q=80" alt="Пчела на цвете">
+                    <div class="lightbox-caption">Пчела събира нектар</div></div>
+                <!-- Photo 7 -->
+                <input type="checkbox" id="lb7" class="lightbox-toggle">
+                <label for="lb7" class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1601063458289-77247ba485ec?w=500&q=80" alt="Природа">
+                    <div class="gallery-overlay"><p>Планински пейзаж край пчелина</p></div>
+                </label>
+                <div class="lightbox"><label for="lb7" class="lightbox-close">&times;</label>
+                    <img src="https://images.unsplash.com/photo-1601063458289-77247ba485ec?w=1000&q=80" alt="Природа">
+                    <div class="lightbox-caption">Планински пейзаж край пчелина</div></div>
+                <!-- Photo 8 -->
+                <input type="checkbox" id="lb8" class="lightbox-toggle">
+                <label for="lb8" class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1554208096-bbba643e2f0b?w=500&q=80" alt="Мед в буркан">
+                    <div class="gallery-overlay"><p>Златист мед готов за продажба</p></div>
+                </label>
+                <div class="lightbox"><label for="lb8" class="lightbox-close">&times;</label>
+                    <img src="https://images.unsplash.com/photo-1554208096-bbba643e2f0b?w=1000&q=80" alt="Мед в буркан">
+                    <div class="lightbox-caption">Златист мед готов за продажба</div></div>
+                <!-- Photo 9 -->
+                <input type="checkbox" id="lb9" class="lightbox-toggle">
+                <label for="lb9" class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=500&q=75" alt="Пчелин">
+                    <div class="gallery-overlay"><p>Летен ден в пчелина</p></div>
+                </label>
+                <div class="lightbox"><label for="lb9" class="lightbox-close">&times;</label>
+                    <img src="https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=1000&q=75" alt="Пчелин">
+                    <div class="lightbox-caption">Летен ден в пчелина</div></div>
+                <!-- Photo 10 -->
+                <input type="checkbox" id="lb10" class="lightbox-toggle">
+                <label for="lb10" class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1471943311424-646960669fbc?w=500&q=75" alt="Мед и восък">
+                    <div class="gallery-overlay"><p>Восъчни пити и мед</p></div>
+                </label>
+                <div class="lightbox"><label for="lb10" class="lightbox-close">&times;</label>
+                    <img src="https://images.unsplash.com/photo-1471943311424-646960669fbc?w=1000&q=75" alt="Мед и восък">
+                    <div class="lightbox-caption">Восъчни пити и мед</div></div>
+            </div>
+        </div>
+    </section>
+    <div class="quote-section">
+        <blockquote>"Ако пчелите изчезнат от лицето на Земята, на човека ще му останат само четири години живот."</blockquote>
+        <cite>- Приписвано на Алберт Айнщайн</cite>
+    </div>
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>Златен кошер</h4>
+                <p>Семейна пчелна ферма от 1992 г. Натурален мед и пчелни продукти от сърцето на България.</p>
+                <div class="social-icons"><span>FB</span><span>IG</span><span>YT</span></div>
+            </div>
+            <div class="footer-col">
+                <h4>Навигация</h4>
+                <a href="index.html">Начало</a><a href="about.html">За стопанството</a>
+                <a href="products.html">Продукция</a><a href="gallery.html">Галерия</a><a href="contact.html">Контакти</a>
+            </div>
+            <div class="footer-col">
+                <h4>Контакти</h4>
+                <p>с. Боженци, общ. Габрово</p><p>Тел: +359 888 123 456</p><p>Email: info@zlatenkosher.bg</p>
+                <p>Работно време: Пон-Съб 8:00-18:00</p>
+            </div>
+        </div>
+        <div class="footer-bottom">&copy; 2026 Пчелна ферма "Златен кошер". Всички права запазени.</div>
+    </footer>
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+        }, { threshold: 0.15 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>БиоДолина - Сертифицирано био стопанство</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'DM Sans', sans-serif; color: #004D40; background: #FAFAFA; }
+        h1, h2, h3, h4 { font-family: 'Nunito Sans', sans-serif; }
+        a { text-decoration: none; color: inherit; }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        .fade-up { animation: fadeInUp 0.8s ease both; }
+        .fade-up-d1 { animation-delay: 0.2s; }
+        .fade-up-d2 { animation-delay: 0.4s; }
+        .fade-up-d3 { animation-delay: 0.6s; }
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255,255,255,0.97);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-shadow: 0 1px 20px rgba(0,77,64,0.08);
+        }
+        .nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 70px;
+        }
+        .logo { font-family: 'Nunito Sans', sans-serif; font-weight: 800; font-size: 1.5rem; color: #00BFA5; }
+        .logo span { color: #004D40; }
+        .nav-links { display: flex; gap: 28px; list-style: none; }
+        .nav-links a {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #004D40;
+            transition: color 0.3s;
+            position: relative;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #00BFA5;
+            transition: width 0.3s;
+        }
+        .nav-links a:hover::after,
+        .nav-links a.active::after { width: 100%; }
+        .nav-links a:hover,
+        .nav-links a.active { color: #00BFA5; }
+        .menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #004D40;
+            cursor: pointer;
+        }
+        .hero {
+            margin-top: 70px;
+            height: 85vh;
+            min-height: 500px;
+            background: linear-gradient(135deg, rgba(0,77,64,0.55), rgba(0,191,165,0.35)),
+                url('https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=1400&q=80') center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #fff;
+        }
+        .hero-content { max-width: 750px; padding: 24px; }
+        .hero h1 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+            line-height: 1.15;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 32px;
+            opacity: 0.95;
+            line-height: 1.7;
+        }
+        .btn {
+            display: inline-block;
+            padding: 14px 36px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+        .btn-primary { background: #00BFA5; color: #fff; }
+        .btn-primary:hover {
+            background: #00E676;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,191,165,0.35);
+        }
+        .btn-outline {
+            border: 2px solid #fff;
+            color: #fff;
+            margin-left: 12px;
+            background: transparent;
+        }
+        .btn-outline:hover { background: #fff; color: #004D40; }
+        .section {
+            padding: 90px 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #004D40;
+        }
+        .section-sub {
+            text-align: center;
+            color: #26A69A;
+            font-size: 1.05rem;
+            margin-bottom: 50px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .badges {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            padding: 60px 24px;
+            background: #E0F2F1;
+        }
+        .badge-item { text-align: center; animation: fadeIn 1s ease both; }
+        .badge-item img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #00BFA5;
+            margin-bottom: 10px;
+        }
+        .badge-item p { font-weight: 600; font-size: 0.9rem; }
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 28px;
+        }
+        .product-card {
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,77,64,0.07);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .product-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 35px rgba(0,77,64,0.13);
+        }
+        .product-card img { width: 100%; height: 200px; object-fit: cover; }
+        .product-card .card-body { padding: 20px; }
+        .product-card h3 { font-size: 1.15rem; margin-bottom: 8px; }
+        .product-card p { font-size: 0.9rem; color: #555; line-height: 1.6; }
+        .bio-tag {
+            display: inline-block;
+            background: #E0F2F1;
+            color: #00BFA5;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+            margin-bottom: 8px;
+        }
+        .why-section { background: #fff; }
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 32px;
+        }
+        .why-card {
+            text-align: center;
+            padding: 36px 24px;
+            border-radius: 16px;
+            background: #FAFAFA;
+            border: 1px solid #E0F2F1;
+            transition: all 0.3s;
+        }
+        .why-card:hover {
+            background: #E0F2F1;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,77,64,0.08);
+        }
+        .why-icon {
+            font-size: 2.2rem;
+            margin-bottom: 14px;
+            display: block;
+        }
+        .why-card h3 { font-size: 1.1rem; margin-bottom: 8px; }
+        .why-card p { font-size: 0.9rem; color: #555; line-height: 1.6; }
+        .stats-bar {
+            background: linear-gradient(135deg, #26A69A, #00BFA5);
+            padding: 50px 24px;
+            color: #fff;
+        }
+        .stats-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+        .stat-item { text-align: center; }
+        .stat-item .num {
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 2.6rem;
+            font-weight: 800;
+        }
+        .stat-item p { font-size: 0.9rem; opacity: 0.9; margin-top: 4px; }
+        .cta-section {
+            background: linear-gradient(135deg, #004D40, #00BFA5);
+            color: #fff;
+            text-align: center;
+            padding: 80px 24px;
+        }
+        .cta-section h2 { font-size: 2rem; margin-bottom: 16px; }
+        .cta-section p {
+            margin-bottom: 28px;
+            opacity: 0.9;
+            max-width: 550px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        footer { background: #004D40; color: #80CBC4; padding: 50px 24px 30px; }
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 36px;
+        }
+        .footer-col h4 { color: #fff; font-size: 1.1rem; margin-bottom: 16px; }
+        .footer-col p,
+        .footer-col a {
+            font-size: 0.9rem;
+            line-height: 1.8;
+            display: block;
+            color: #80CBC4;
+            transition: color 0.3s;
+        }
+        .footer-col a:hover { color: #00E676; }
+        .footer-bottom {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(128,203,196,0.2);
+            font-size: 0.85rem;
+        }
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: #fff;
+                flex-direction: column;
+                padding: 20px;
+                gap: 16px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            }
+            .nav-links.open { display: flex; }
+            .menu-btn { display: block; }
+            .hero h1 { font-size: 2rem; }
+            .hero { height: 70vh; }
+            .section-title { font-size: 1.7rem; }
+            .stat-item .num { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-inner">
+            <a href="index.html" class="logo">Био<span>Долина</span></a>
+            <button class="menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('open')">&#9776;</button>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Начало</a></li>
+                <li><a href="about.html">За стопанството</a></li>
+                <li><a href="products.html">Продукция</a></li>
+                <li><a href="gallery.html">Галерия</a></li>
+                <li><a href="contact.html">Контакти</a></li>
+            </ul>
+        </div>
+    </nav>
+    <section class="hero">
+        <div class="hero-content fade-up">
+            <h1>Сертифицирано био стопанство в сърцето на Пирин</h1>
+            <p>Отглеждаме с любов и грижа за земята. Без пестициди, без ГМО - само чиста природа и сертифицирано био качество от нашето семейно стопанство.</p>
+            <a href="products.html" class="btn btn-primary">Нашата продукция</a>
+            <a href="about.html" class="btn btn-outline">Научи повече</a>
+        </div>
+    </section>
+    <div class="badges">
+        <div class="badge-item fade-up">
+            <img src="https://images.unsplash.com/photo-1589927986089-35812388d1f4?w=200&q=80" alt="EU Bio">
+            <p>EU Bio сертификат</p>
+        </div>
+        <div class="badge-item fade-up fade-up-d1">
+            <img src="https://images.unsplash.com/photo-1500651230702-0e2d8a49d4ad?w=200&q=80" alt="Без ГМО">
+            <p>100% без ГМО</p>
+        </div>
+        <div class="badge-item fade-up fade-up-d2">
+            <img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=200&q=80" alt="Без пестициди">
+            <p>Без пестициди</p>
+        </div>
+        <div class="badge-item fade-up fade-up-d3">
+            <img src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=200&q=80" alt="Устойчиво земеделие">
+            <p>Устойчиво земеделие</p>
+        </div>
+    </div>
+    <section class="section">
+        <h2 class="section-title">Сезонна продукция</h2>
+        <p class="section-sub">Свежи био продукти директно от нашите полета до вашата маса, отгледани с грижа и сертифицирани по европейски стандарти.</p>
+        <div class="products-grid">
+            <div class="product-card fade-up">
+                <img src="https://images.unsplash.com/photo-1592924357228-91a4daadce55?w=600&q=80" alt="Био зеленчуци">
+                <div class="card-body">
+                    <span class="bio-tag">BIO сертифицирано</span>
+                    <h3>Био зеленчуци</h3>
+                    <p>Домати, краставици, моркови и картофи, отгледани без химикали в плодородната пиринска почва.</p>
+                </div>
+            </div>
+            <div class="product-card fade-up fade-up-d1">
+                <img src="https://images.unsplash.com/photo-1619566636858-adf3ef46400b?w=600&q=80" alt="Био плодове">
+                <div class="card-body">
+                    <span class="bio-tag">BIO сертифицирано</span>
+                    <h3>Био плодове</h3>
+                    <p>Ябълки, круши, сливи и ягоди от нашите градини - сочни, ароматни и напълно натурални.</p>
+                </div>
+            </div>
+            <div class="product-card fade-up fade-up-d2">
+                <img src="https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=600&q=80" alt="Био мед">
+                <div class="card-body">
+                    <span class="bio-tag">BIO сертифицирано</span>
+                    <h3>Био мед и билки</h3>
+                    <p>Планински мед от екологично чист район и ароматни билки, събрани от пиринските поляни.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="stats-bar">
+        <div class="stats-inner">
+            <div class="stat-item fade-up">
+                <div class="num">15+</div>
+                <p>хектара био земя</p>
+            </div>
+            <div class="stat-item fade-up fade-up-d1">
+                <div class="num">10</div>
+                <p>години опит</p>
+            </div>
+            <div class="stat-item fade-up fade-up-d2">
+                <div class="num">500+</div>
+                <p>доволни клиенти</p>
+            </div>
+            <div class="stat-item fade-up fade-up-d3">
+                <div class="num">30+</div>
+                <p>био продукта</p>
+            </div>
+        </div>
+    </div>
+    <section class="section why-section">
+        <h2 class="section-title">Защо да изберете БиоДолина?</h2>
+        <p class="section-sub">Нашите продукти са гаранция за здраве, качество и грижа за околната среда.</p>
+        <div class="why-grid">
+            <div class="why-card fade-up">
+                <span class="why-icon">&#127793;</span>
+                <h3>Чиста продукция</h3>
+                <p>Без синтетични торове и пестициди. Само естествени методи за отглеждане и защита на растенията.</p>
+            </div>
+            <div class="why-card fade-up fade-up-d1">
+                <span class="why-icon">&#128203;</span>
+                <h3>Пълна проследимост</h3>
+                <p>Всеки продукт е проследим от семето до вашата маса. Знаете точно откъде идва храната ви.</p>
+            </div>
+            <div class="why-card fade-up fade-up-d2">
+                <span class="why-icon">&#127758;</span>
+                <h3>Екологично отговорно</h3>
+                <p>Грижим се за почвата, водата и биоразнообразието. Нашето земеделие обогатява природата.</p>
+            </div>
+        </div>
+    </section>
+    <section class="cta-section">
+        <h2>Поръчайте вашата био кошница</h2>
+        <p>Получавайте всяка седмица прясна, сертифицирана био продукция директно от нашето стопанство до вашия дом.</p>
+        <a href="contact.html" class="btn btn-primary">Направете запитване</a>
+    </section>
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-col">
+                <h4>БиоДолина</h4>
+                <p>Сертифицирано био стопанство в района на Банско, Пиринско. EU Bio сертификат BG-BIO-001.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Навигация</h4>
+                <a href="index.html">Начало</a>
+                <a href="about.html">За стопанството</a>
+                <a href="products.html">Продукция</a>
+                <a href="gallery.html">Галерия</a>
+                <a href="contact.html">Контакти</a>
+            </div>
+            <div class="footer-col">
+                <h4>Контакти</h4>
+                <p>с. Добринище, общ. Банско</p>
+                <p>тел: +359 888 123 456</p>
+                <p>bio@biodolina.bg</p>
+            </div>
+            <div class="footer-col">
+                <h4>Последвайте ни</h4>
+                <a href="#">Facebook</a>
+                <a href="#">Instagram</a>
+                <a href="#">YouTube</a>
+            </div>
+        </div>
+        <div class="footer-bottom">&copy; 2026 БиоДолина. Всички права запазени. Сертифицирано био стопанство.</div>
+    </footer>
+</body>
+</html>

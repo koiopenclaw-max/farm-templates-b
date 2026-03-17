@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ЗеленоСтъкло - Оранжерийно стопанство</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; color: #1B5E20; background: #FFFFFF; }
+        h1, h2, h3, h4 { font-family: 'Outfit', sans-serif; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideInLeft { from { opacity: 0; transform: translateX(-40px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes slideInRight { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: translateX(0); } }
+        .fade-up { animation: fadeInUp 0.8s ease both; }
+        .fade-in { animation: fadeIn 1s ease both; }
+        .slide-left { animation: slideInLeft 0.8s ease both; }
+        .slide-right { animation: slideInRight 0.8s ease both; }
+        nav { background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); padding: 0.8rem 2rem; display: flex; justify-content: space-between; align-items: center; position: fixed; width: 100%; top: 0; z-index: 1000; box-shadow: 0 2px 20px rgba(46,125,50,0.1); }
+        .logo { font-family: 'Outfit', sans-serif; font-size: 1.5rem; font-weight: 700; color: #2E7D32; text-decoration: none; }
+        .logo span { color: #66BB6A; }
+        .nav-links { display: flex; list-style: none; gap: 1.5rem; }
+        .nav-links a { text-decoration: none; color: #1B5E20; font-weight: 500; font-size: 0.95rem; transition: color 0.3s; position: relative; }
+        .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: #43A047; transition: width 0.3s; }
+        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+        .nav-links a:hover, .nav-links a.active { color: #43A047; }
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; }
+        .hamburger span { width: 25px; height: 2px; background: #1B5E20; transition: 0.3s; }
+        .hero { height: 100vh; background: linear-gradient(135deg, rgba(27,94,32,0.7), rgba(46,125,50,0.5)), url('https://images.unsplash.com/photo-1585500001502-59c18e3c9e3c?w=1600&q=80') center/cover; display: flex; align-items: center; justify-content: center; text-align: center; color: #fff; padding: 2rem; }
+        .hero-content { max-width: 800px; animation: fadeInUp 1s ease; }
+        .hero h1 { font-size: 3.5rem; margin-bottom: 1rem; line-height: 1.2; text-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+        .hero p { font-size: 1.25rem; margin-bottom: 2rem; opacity: 0.95; line-height: 1.7; }
+        .btn { display: inline-block; padding: 0.9rem 2.2rem; border-radius: 50px; font-family: 'Outfit', sans-serif; font-weight: 600; text-decoration: none; transition: all 0.3s; font-size: 1rem; cursor: pointer; border: none; }
+        .btn-primary { background: #43A047; color: #fff; }
+        .btn-primary:hover { background: #2E7D32; transform: translateY(-2px); box-shadow: 0 8px 25px rgba(46,125,50,0.4); }
+        .btn-outline { border: 2px solid #fff; color: #fff; margin-left: 1rem; background: transparent; }
+        .btn-outline:hover { background: #fff; color: #2E7D32; }
+        section { padding: 5rem 2rem; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .section-title { text-align: center; margin-bottom: 3rem; }
+        .section-title h2 { font-size: 2.5rem; color: #1B5E20; margin-bottom: 0.8rem; }
+        .section-title p { color: #43A047; font-size: 1.1rem; }
+        .intro { background: #F1F8E9; }
+        .intro-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+        .intro-img { border-radius: 20px; overflow: hidden; box-shadow: 0 15px 40px rgba(46,125,50,0.15); }
+        .intro-img img { width: 100%; height: 400px; object-fit: cover; transition: transform 0.5s; }
+        .intro-img:hover img { transform: scale(1.05); }
+        .intro-text h2 { font-size: 2rem; color: #1B5E20; margin-bottom: 1rem; }
+        .intro-text p { line-height: 1.8; color: #2E7D32; margin-bottom: 1.5rem; }
+        .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 3rem; }
+        .feature-card { background: #fff; padding: 2rem; border-radius: 16px; text-align: center; box-shadow: 0 5px 25px rgba(46,125,50,0.08); transition: transform 0.3s, box-shadow 0.3s; }
+        .feature-card:hover { transform: translateY(-8px); box-shadow: 0 15px 40px rgba(46,125,50,0.15); }
+        .feature-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+        .feature-card h3 { font-size: 1.2rem; color: #1B5E20; margin-bottom: 0.5rem; }
+        .feature-card p { color: #43A047; font-size: 0.95rem; line-height: 1.6; }
+        .seasons { background: #E8F5E9; }
+        .season-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+        .season-card { background: #fff; border-radius: 16px; overflow: hidden; text-align: center; box-shadow: 0 5px 20px rgba(0,0,0,0.05); transition: transform 0.3s; }
+        .season-card:hover { transform: translateY(-5px); }
+        .season-card img { width: 100%; height: 180px; object-fit: cover; }
+        .season-card .info { padding: 1.2rem; }
+        .season-card h3 { color: #2E7D32; margin-bottom: 0.4rem; }
+        .season-card p { font-size: 0.9rem; color: #43A047; }
+        .cta-section { background: linear-gradient(135deg, #2E7D32, #43A047); color: #fff; text-align: center; padding: 4rem 2rem; }
+        .cta-section h2 { font-size: 2.2rem; margin-bottom: 1rem; }
+        .cta-section p { font-size: 1.1rem; margin-bottom: 2rem; opacity: 0.9; }
+        footer { background: #1B5E20; color: #E8F5E9; padding: 3rem 2rem 1.5rem; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2rem; max-width: 1200px; margin: 0 auto; }
+        .footer-col h4 { font-family: 'Outfit', sans-serif; margin-bottom: 1rem; color: #66BB6A; }
+        .footer-col p, .footer-col a { color: #E8F5E9; text-decoration: none; font-size: 0.9rem; line-height: 1.8; display: block; }
+        .footer-col a:hover { color: #66BB6A; }
+        .footer-bottom { text-align: center; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(102,187,106,0.2); font-size: 0.85rem; max-width: 1200px; margin-left: auto; margin-right: auto; }
+        .social-links { display: flex; gap: 1rem; margin-top: 0.5rem; }
+        .social-links a { width: 36px; height: 36px; border-radius: 50%; background: rgba(102,187,106,0.2); display: flex; align-items: center; justify-content: center; color: #66BB6A; text-decoration: none; transition: background 0.3s; font-size: 0.85rem; font-weight: 600; }
+        .social-links a:hover { background: #43A047; color: #fff; }
+        @media (max-width: 768px) {
+            .hamburger { display: flex; }
+            .nav-links { display: none; position: absolute; top: 100%; left: 0; width: 100%; background: #fff; flex-direction: column; padding: 1rem 2rem; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+            .nav-links.active { display: flex; }
+            .hero h1 { font-size: 2.2rem; }
+            .intro-grid { grid-template-columns: 1fr; }
+            .features { grid-template-columns: 1fr; }
+            .season-grid { grid-template-columns: 1fr 1fr; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+            .btn-outline { margin-left: 0; margin-top: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo">Зелено<span>Стъкло</span></a>
+        <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('active')">
+            <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links">
+            <li><a href="index.html" class="active">Начало</a></li>
+            <li><a href="about.html">За стопанството</a></li>
+            <li><a href="products.html">Продукция</a></li>
+            <li><a href="gallery.html">Галерия</a></li>
+            <li><a href="contact.html">Контакти</a></li>
+        </ul>
+    </nav>
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Пресни зеленчуци целогодишно от нашите оранжерии</h1>
+            <p>Отглеждаме с грижа и съвременни технологии най-качествените домати, краставици, чушки и зеленчуци в региона на Пловдив. Директно от оранжерията до вашата трапеза.</p>
+            <a href="products.html" class="btn btn-primary">Вижте продукцията</a>
+            <a href="contact.html" class="btn btn-outline">Свържете се с нас</a>
+        </div>
+    </section>
+    <section class="intro">
+        <div class="container">
+            <div class="intro-grid">
+                <div class="intro-img slide-left">
+                    <img src="https://images.unsplash.com/photo-1592878904946-b3cd8ae243d0?w=800&q=80" alt="Оранжерия интериор">
+                </div>
+                <div class="intro-text slide-right">
+                    <h2>Добре дошли в ЗеленоСтъкло</h2>
+                    <p>Нашето оранжерийно стопанство е сред водещите производители на свежи зеленчуци в Южна България. С над 15 години опит и 12 000 кв.м. покрита площ, ние осигуряваме целогодишно снабдяване с висококачествена продукция.</p>
+                    <p>Използваме модерни хидропонни системи, капково напояване и интелигентно управление на климата, за да гарантираме оптимални условия за растеж през всеки сезон.</p>
+                    <a href="about.html" class="btn btn-primary">Научете повече</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="container">
+            <div class="section-title fade-up">
+                <h2>Защо да изберете нас</h2>
+                <p>Качество, иновации и устойчивост във всеки плод</p>
+            </div>
+            <div class="features">
+                <div class="feature-card fade-up">
+                    <div class="feature-icon">&#127793;</div>
+                    <h3>Целогодишно производство</h3>
+                    <p>Благодарение на модерните оранжерии, предлагаме пресни зеленчуци 365 дни в годината.</p>
+                </div>
+                <div class="feature-card fade-up" style="animation-delay:0.2s">
+                    <div class="feature-icon">&#128167;</div>
+                    <h3>Капково напояване</h3>
+                    <p>Пестим до 60% вода с прецизни системи за капково напояване и рециклиране.</p>
+                </div>
+                <div class="feature-card fade-up" style="animation-delay:0.4s">
+                    <div class="feature-icon">&#9889;</div>
+                    <h3>Екологично чисто</h3>
+                    <p>Минимално използване на химикали, биологична растителна защита и устойчиви практики.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="seasons">
+        <div class="container">
+            <div class="section-title"><h2>Сезонни акценти</h2><p>Какво отглеждаме през различните сезони</p></div>
+            <div class="season-grid">
+                <div class="season-card fade-up">
+                    <img src="https://images.unsplash.com/photo-1592921870789-04563d55041c?w=500&q=80" alt="Пролет">
+                    <div class="info"><h3>Пролет</h3><p>Разсад, маруля, рукола, ранни домати</p></div>
+                </div>
+                <div class="season-card fade-up" style="animation-delay:0.15s">
+                    <img src="https://images.unsplash.com/photo-1471194402529-8e0f5a675de6?w=500&q=80" alt="Лято">
+                    <div class="info"><h3>Лято</h3><p>Домати, краставици, чушки, тиквички</p></div>
+                </div>
+                <div class="season-card fade-up" style="animation-delay:0.3s">
+                    <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=500&q=80" alt="Есен">
+                    <div class="info"><h3>Есен</h3><p>Чери домати, билки, късна реколта</p></div>
+                </div>
+                <div class="season-card fade-up" style="animation-delay:0.45s">
+                    <img src="https://images.unsplash.com/photo-1516594798947-e65505dbb29d?w=500&q=80" alt="Зима">
+                    <div class="info"><h3>Зима</h3><p>Маруля, спанак, билки, микрорастения</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="cta-section">
+        <h2>Готови ли сте да опитате нашата продукция?</h2>
+        <p>Свържете се с нас за поръчки на едро или дребно, партньорства или посещение на стопанството.</p>
+        <a href="contact.html" class="btn btn-outline">Направете запитване</a>
+    </section>
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>ЗеленоСтъкло</h4>
+                <p>Оранжерийно стопанство за производство на висококачествени зеленчуци в региона на Пловдив. Пресни продукти целогодишно.</p>
+                <div class="social-links">
+                    <a href="#">Fb</a><a href="#">Ig</a><a href="#">Yt</a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Навигация</h4>
+                <a href="index.html">Начало</a><a href="about.html">За стопанството</a><a href="products.html">Продукция</a><a href="gallery.html">Галерия</a><a href="contact.html">Контакти</a>
+            </div>
+            <div class="footer-col">
+                <h4>Продукция</h4>
+                <a href="products.html">Домати</a><a href="products.html">Краставици</a><a href="products.html">Чушки</a><a href="products.html">Билки</a>
+            </div>
+            <div class="footer-col">
+                <h4>Контакти</h4>
+                <p>с. Брестник, община Родопи</p>
+                <p>4108 Пловдив, България</p>
+                <p>+359 32 123 456</p>
+                <p>info@zelenostaklo.bg</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 ЗеленоСтъкло. Всички права запазени.</p>
+        </div>
+    </footer>
+</body>
+</html>

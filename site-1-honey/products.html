@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Продукция - Пчелна ферма "Златен кошер"</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Lora', serif; color: #3E2723; background: #FFF8E1; }
+        a { text-decoration: none; color: inherit; }
+        h1, h2, h3, h4 { font-family: 'Amatic SC', cursive; }
+        nav { background: #3E2723; position: sticky; top: 0; z-index: 1000; }
+        .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; }
+        .nav-logo { font-family: 'Amatic SC', cursive; font-size: 1.8rem; color: #F0A500; padding: 15px 0; font-weight: 700; }
+        .nav-links { display: flex; list-style: none; gap: 5px; }
+        .nav-links a { color: #FFF8E1; padding: 20px 15px; display: block; font-size: 0.95rem; transition: background 0.3s, color 0.3s; }
+        .nav-links a:hover, .nav-links a.active { background: #F0A500; color: #3E2723; }
+        .menu-toggle { display: none; background: none; border: none; color: #F0A500; font-size: 1.8rem; cursor: pointer; }
+        @media (max-width: 768px) {
+            .menu-toggle { display: block; }
+            .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: #3E2723; }
+            .nav-links.open { display: flex; }
+            .nav-links a { padding: 15px 20px; border-top: 1px solid #5D4037; }
+        }
+        .page-header { background: linear-gradient(rgba(62,39,35,0.6), rgba(62,39,35,0.75)),
+            url('https://images.unsplash.com/photo-1471943311424-646960669fbc?w=1400&q=80') center/cover no-repeat;
+            padding: 100px 20px 60px; text-align: center; color: #FFF8E1; }
+        .page-header h1 { font-size: clamp(2.8rem, 7vw, 4.5rem); margin-bottom: 10px; animation: fadeInUp 1s ease; }
+        .page-header p { font-size: 1.1rem; opacity: 0.9; animation: fadeInUp 1s ease 0.2s both; }
+        section { padding: 60px 20px; }
+        .container { max-width: 1100px; margin: 0 auto; }
+        .section-title { font-size: 3rem; text-align: center; margin-bottom: 15px; color: #3E2723; }
+        .section-sub { text-align: center; color: #5D4037; margin-bottom: 45px; font-size: 1.05rem; max-width: 600px; margin-left: auto; margin-right: auto; }
+        /* Product Cards */
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .product-card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 20px rgba(62,39,35,0.1);
+            transition: transform 0.4s, box-shadow 0.4s; }
+        .product-card:hover { transform: translateY(-8px); box-shadow: 0 12px 35px rgba(62,39,35,0.2); }
+        .product-img { position: relative; overflow: hidden; height: 200px; }
+        .product-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+        .product-card:hover .product-img img { transform: scale(1.08); }
+        .product-badge { position: absolute; top: 12px; right: 12px; background: #F0A500; color: #3E2723; padding: 5px 14px;
+            border-radius: 20px; font-size: 0.8rem; font-weight: 700; }
+        .product-body { padding: 22px; }
+        .product-body h3 { font-size: 2rem; margin-bottom: 8px; color: #3E2723; }
+        .product-body p { font-size: 0.9rem; color: #5D4037; line-height: 1.6; margin-bottom: 15px; }
+        .product-price { font-family: 'Amatic SC', cursive; font-size: 1.8rem; color: #D4931A; font-weight: 700; }
+        .product-price span { font-family: 'Lora', serif; font-size: 0.85rem; color: #5D4037; font-weight: 400; }
+        .product-btn { display: inline-block; margin-top: 12px; padding: 10px 25px; background: #F0A500; color: #3E2723;
+            border-radius: 25px; font-size: 0.9rem; font-weight: 700; transition: all 0.3s; }
+        .product-btn:hover { background: #D4931A; transform: translateY(-2px); }
+        /* Info Banner */
+        .info-banner { background: #3E2723; color: #FFF8E1; padding: 50px 20px; text-align: center; }
+        .info-banner h2 { font-size: 2.8rem; color: #F0A500; margin-bottom: 12px; }
+        .info-banner p { max-width: 650px; margin: 0 auto 20px; line-height: 1.7; opacity: 0.9; }
+        .info-features { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; margin-top: 25px; }
+        .info-feature { text-align: center; }
+        .info-feature .icon { font-size: 2.2rem; margin-bottom: 8px; }
+        .info-feature h4 { font-size: 1.5rem; color: #F0A500; }
+        .info-feature p { font-size: 0.85rem; opacity: 0.8; }
+        /* Footer */
+        footer { background: #3E2723; color: #FFF8E1; padding: 40px 20px; }
+        .footer-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 30px; }
+        .footer-col h4 { font-family: 'Amatic SC', cursive; font-size: 1.8rem; color: #F0A500; margin-bottom: 12px; }
+        .footer-col p, .footer-col a { font-size: 0.9rem; line-height: 1.8; color: #FFF8E1; opacity: 0.8; display: block; }
+        .footer-col a:hover { opacity: 1; color: #F0A500; }
+        .social-icons { display: flex; gap: 12px; margin-top: 10px; }
+        .social-icons span { width: 38px; height: 38px; border-radius: 50%; border: 1px solid #F0A500; display: flex; align-items: center;
+            justify-content: center; font-size: 0.8rem; color: #F0A500; transition: all 0.3s; cursor: pointer; }
+        .social-icons span:hover { background: #F0A500; color: #3E2723; }
+        .footer-bottom { text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #5D4037; font-size: 0.85rem; opacity: 0.7; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in { opacity: 0; transform: translateY(25px); transition: opacity 0.8s ease, transform 0.8s ease; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">&#127855; Златен кошер</a>
+            <button class="menu-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">&#9776;</button>
+            <ul class="nav-links">
+                <li><a href="index.html">Начало</a></li>
+                <li><a href="about.html">За стопанството</a></li>
+                <li><a href="products.html" class="active">Продукция</a></li>
+                <li><a href="gallery.html">Галерия</a></li>
+                <li><a href="contact.html">Контакти</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="page-header">
+        <h1>Нашата продукция</h1>
+        <p>Чист, натурален мед и пчелни продукти от сърцето на Стара планина</p>
+    </div>
+    <section>
+        <div class="container">
+            <h2 class="section-title">Видове мед</h2>
+            <p class="section-sub">Всеки вид мед има уникален вкус, аромат и полезни свойства, определени от цветята, от които е събран.</p>
+            <div class="products-grid">
+                <div class="product-card fade-in">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=500&q=80" alt="Акациев мед">
+                        <span class="product-badge">Популярен</span>
+                    </div>
+                    <div class="product-body">
+                        <h3>Акациев мед</h3>
+                        <p>Светъл, прозрачен мед с нежен, деликатен вкус. Не кристализира дълго време. Подходящ за деца и хора с алергии.</p>
+                        <div class="product-price">18 лв. <span>/ 500 г буркан</span></div>
+                        <a href="contact.html" class="product-btn">Поръчай</a>
+                    </div>
+                </div>
+                <div class="product-card fade-in">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?w=500&q=80" alt="Липов мед">
+                    </div>
+                    <div class="product-body">
+                        <h3>Липов мед</h3>
+                        <p>Ароматен мед с характерен ментов послевкус. Известен с противовъзпалителните си свойства, идеален при настинки.</p>
+                        <div class="product-price">20 лв. <span>/ 500 г буркан</span></div>
+                        <a href="contact.html" class="product-btn">Поръчай</a>
+                    </div>
+                </div>
+                <div class="product-card fade-in">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1471943311424-646960669fbc?w=500&q=80" alt="Полифлорен мед">
+                        <span class="product-badge">Най-продаван</span>
+                    </div>
+                    <div class="product-body">
+                        <h3>Полифлорен мед</h3>
+                        <p>Многоцветен мед с богат вкус и аромат. Съчетава нектара от десетки видове диви цветя от планинските ливади.</p>
+                        <div class="product-price">16 лв. <span>/ 500 г буркан</span></div>
+                        <a href="contact.html" class="product-btn">Поръчай</a>
+                    </div>
+                </div>
+                <div class="product-card fade-in">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?w=500&q=80" alt="Манов мед">
+                    </div>
+                    <div class="product-body">
+                        <h3>Манов мед</h3>
+                        <p>Тъмен, гъст мед с наситен вкус и високо съдържание на минерали. Събиран от горските масиви на Балкана.</p>
+                        <div class="product-price">22 лв. <span>/ 500 г буркан</span></div>
+                        <a href="contact.html" class="product-btn">Поръчай</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section style="background: white;">
+        <div class="container">
+            <h2 class="section-title">Други пчелни продукти</h2>
+            <div class="products-grid">
+                <div class="product-card fade-in">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=500&q=80" alt="Пчелен восък">
+                    </div>
+                    <div class="product-body">
+                        <h3>Пчелен восък</h3>
+                        <p>Чист пчелен восък за козметика, свещи и домашна употреба. Филтриран и формован на блокчета.</p>
+                        <div class="product-price">12 лв. <span>/ 250 г блокче</span></div>
+                        <a href="contact.html" class="product-btn">Поръчай</a>
+                    </div>
+                </div>
+                <div class="product-card fade-in">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1471943311424-646960669fbc?w=500&q=80" alt="Прополис">
+                    </div>
+                    <div class="product-body">
+                        <h3>Прополис</h3>
+                        <p>Натурален прополис с мощни антибактериални свойства. Предлагаме тинктура и суров прополис.</p>
+                        <div class="product-price">15 лв. <span>/ 30 мл тинктура</span></div>
+                        <a href="contact.html" class="product-btn">Поръчай</a>
+                    </div>
+                </div>
+                <div class="product-card fade-in">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?w=500&q=80" alt="Пчелно млечице">
+                    </div>
+                    <div class="product-body">
+                        <h3>Пчелно млечице</h3>
+                        <p>Ценен пчелен продукт, богат на витамини и аминокиселини. Укрепва имунната система и тонизира.</p>
+                        <div class="product-price">35 лв. <span>/ 10 г</span></div>
+                        <a href="contact.html" class="product-btn">Поръчай</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="info-banner">
+        <h2>Защо нашият мед?</h2>
+        <p>Всеки буркан мед от "Златен кошер" е гаранция за качество, чистота и натуралност.</p>
+        <div class="info-features">
+            <div class="info-feature"><div class="icon">&#127807;</div><h4>100% натурален</h4><p>Без добавки и примеси</p></div>
+            <div class="info-feature"><div class="icon">&#128205;</div><h4>Български произход</h4><p>От Габровския балкан</p></div>
+            <div class="info-feature"><div class="icon">&#127942;</div><h4>Сертифициран</h4><p>Лабораторно тестван</p></div>
+            <div class="info-feature"><div class="icon">&#128666;</div><h4>Бърза доставка</h4><p>В цяла България</p></div>
+        </div>
+    </div>
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>Златен кошер</h4>
+                <p>Семейна пчелна ферма от 1992 г. Натурален мед и пчелни продукти от сърцето на България.</p>
+                <div class="social-icons"><span>FB</span><span>IG</span><span>YT</span></div>
+            </div>
+            <div class="footer-col">
+                <h4>Навигация</h4>
+                <a href="index.html">Начало</a><a href="about.html">За стопанството</a>
+                <a href="products.html">Продукция</a><a href="gallery.html">Галерия</a><a href="contact.html">Контакти</a>
+            </div>
+            <div class="footer-col">
+                <h4>Контакти</h4>
+                <p>с. Боженци, общ. Габрово</p><p>Тел: +359 888 123 456</p><p>Email: info@zlatenkosher.bg</p>
+                <p>Работно време: Пон-Съб 8:00-18:00</p>
+            </div>
+        </div>
+        <div class="footer-bottom">&copy; 2026 Пчелна ферма "Златен кошер". Всички права запазени.</div>
+    </footer>
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+        }, { threshold: 0.15 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

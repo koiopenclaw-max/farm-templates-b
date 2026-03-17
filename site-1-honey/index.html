@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Пчелна ферма "Златен кошер" - Начало</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Lora', serif; color: #3E2723; background: #FFF8E1; }
+        a { text-decoration: none; color: inherit; }
+        h1, h2, h3, h4 { font-family: 'Amatic SC', cursive; }
+        /* Navigation */
+        nav { background: #3E2723; padding: 0; position: sticky; top: 0; z-index: 1000; }
+        .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; }
+        .nav-logo { font-family: 'Amatic SC', cursive; font-size: 1.8rem; color: #F0A500; padding: 15px 0; font-weight: 700; }
+        .nav-links { display: flex; list-style: none; gap: 5px; }
+        .nav-links a { color: #FFF8E1; padding: 20px 15px; display: block; font-size: 0.95rem; transition: background 0.3s, color 0.3s; }
+        .nav-links a:hover, .nav-links a.active { background: #F0A500; color: #3E2723; }
+        .menu-toggle { display: none; background: none; border: none; color: #F0A500; font-size: 1.8rem; cursor: pointer; }
+        @media (max-width: 768px) {
+            .menu-toggle { display: block; }
+            .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: #3E2723; }
+            .nav-links.open { display: flex; }
+            .nav-links a { padding: 15px 20px; border-top: 1px solid #5D4037; }
+        }
+        /* Hero */
+        .hero { position: relative; height: 85vh; min-height: 500px; display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(rgba(62,39,35,0.55), rgba(62,39,35,0.7)), url('https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?w=1400&q=80') center/cover no-repeat; }
+        .hero-content { text-align: center; color: #FFF8E1; padding: 20px; animation: fadeInUp 1.2s ease; }
+        .hero h1 { font-size: clamp(3rem, 8vw, 5.5rem); margin-bottom: 15px; text-shadow: 2px 2px 8px rgba(0,0,0,0.4); }
+        .hero p { font-family: 'Lora', serif; font-size: clamp(1rem, 2.5vw, 1.3rem); max-width: 650px; margin: 0 auto 30px; line-height: 1.7; }
+        .btn { display: inline-block; padding: 14px 35px; border-radius: 30px; font-family: 'Lora', serif; font-weight: 700; font-size: 1rem; transition: all 0.3s; cursor: pointer; border: none; }
+        .btn-primary { background: #F0A500; color: #3E2723; margin-right: 10px; }
+        .btn-primary:hover { background: #D4931A; transform: translateY(-2px); box-shadow: 0 4px 15px rgba(240,165,0,0.4); }
+        .btn-secondary { background: transparent; color: #FFF8E1; border: 2px solid #FFF8E1; }
+        .btn-secondary:hover { background: #FFF8E1; color: #3E2723; transform: translateY(-2px); }
+        /* Sections */
+        section { padding: 70px 20px; }
+        .container { max-width: 1100px; margin: 0 auto; }
+        .section-title { font-size: 3rem; text-align: center; margin-bottom: 15px; color: #3E2723; }
+        .section-sub { text-align: center; color: #5D4037; margin-bottom: 45px; font-size: 1.05rem; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.6; }
+        /* Welcome */
+        .welcome { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+        .welcome img { width: 100%; border-radius: 15px; box-shadow: 0 8px 30px rgba(62,39,35,0.2); }
+        .welcome-text h2 { font-size: 2.8rem; margin-bottom: 15px; }
+        .welcome-text p { line-height: 1.8; margin-bottom: 15px; color: #5D4037; }
+        @media (max-width: 768px) { .welcome { grid-template-columns: 1fr; } }
+        /* Featured Products */
+        .products-bg { background: #3E2723; color: #FFF8E1; }
+        .products-bg .section-title { color: #F0A500; }
+        .products-bg .section-sub { color: #FFF8E1; opacity: 0.85; }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 25px; }
+        .product-card { background: #5D4037; border-radius: 12px; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s; }
+        .product-card:hover { transform: translateY(-8px); box-shadow: 0 12px 35px rgba(0,0,0,0.3); }
+        .product-card img { width: 100%; height: 180px; object-fit: cover; }
+        .product-card-body { padding: 20px; }
+        .product-card h3 { font-size: 1.8rem; color: #F0A500; margin-bottom: 8px; }
+        .product-card p { font-size: 0.9rem; opacity: 0.85; line-height: 1.5; }
+        /* CTA */
+        .cta { background: linear-gradient(135deg, #F0A500, #D4931A); text-align: center; color: #3E2723; }
+        .cta h2 { font-size: 3rem; margin-bottom: 15px; }
+        .cta p { max-width: 550px; margin: 0 auto 25px; font-size: 1.05rem; line-height: 1.6; }
+        .cta .btn { background: #3E2723; color: #F0A500; }
+        .cta .btn:hover { background: #5D4037; transform: translateY(-2px); }
+        /* Stats */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 25px; }
+        .stat-card { text-align: center; padding: 30px 20px; border-radius: 12px; background: #FFF8E1;
+            border: 2px solid #F0A500; transition: transform 0.3s, box-shadow 0.3s; }
+        .stat-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(240,165,0,0.2); }
+        .stat-number { font-family: 'Amatic SC', cursive; font-size: 3.5rem; font-weight: 700; color: #D4931A; }
+        .stat-label { font-family: 'Amatic SC', cursive; font-size: 1.6rem; color: #3E2723; margin-bottom: 8px; }
+        .stat-card p { font-size: 0.85rem; color: #5D4037; line-height: 1.5; }
+        /* Testimonials */
+        .testimonials { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+        .testimonial { background: white; padding: 28px; border-radius: 12px; border-left: 4px solid #F0A500;
+            box-shadow: 0 4px 15px rgba(62,39,35,0.08); transition: transform 0.3s; }
+        .testimonial:hover { transform: translateY(-4px); }
+        .testimonial-text { font-style: italic; line-height: 1.7; color: #5D4037; margin-bottom: 12px; }
+        .testimonial-author { font-weight: 700; color: #D4931A; font-size: 0.9rem; }
+        /* Footer */
+        footer { background: #3E2723; color: #FFF8E1; padding: 40px 20px; }
+        .footer-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 30px; }
+        .footer-col h4 { font-size: 1.8rem; color: #F0A500; margin-bottom: 12px; }
+        .footer-col p, .footer-col a { font-size: 0.9rem; line-height: 1.8; color: #FFF8E1; opacity: 0.8; display: block; }
+        .footer-col a:hover { opacity: 1; color: #F0A500; }
+        .social-icons { display: flex; gap: 12px; margin-top: 10px; }
+        .social-icons span { width: 38px; height: 38px; border-radius: 50%; border: 1px solid #F0A500; display: flex; align-items: center; justify-content: center;
+            font-size: 0.8rem; color: #F0A500; transition: all 0.3s; cursor: pointer; }
+        .social-icons span:hover { background: #F0A500; color: #3E2723; }
+        .footer-bottom { text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #5D4037; font-size: 0.85rem; opacity: 0.7; }
+        /* Animations */
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in { opacity: 0; transform: translateY(25px); transition: opacity 0.8s ease, transform 0.8s ease; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">&#127855; Златен кошер</a>
+            <button class="menu-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">&#9776;</button>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Начало</a></li>
+                <li><a href="about.html">За стопанството</a></li>
+                <li><a href="products.html">Продукция</a></li>
+                <li><a href="gallery.html">Галерия</a></li>
+                <li><a href="contact.html">Контакти</a></li>
+            </ul>
+        </div>
+    </nav>
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Златен кошер</h1>
+            <p>Добре дошли в нашата пчелна ферма. Повече от 30 години отглеждаме пчели и произвеждаме чист, натурален мед в сърцето на България.</p>
+            <a href="products.html" class="btn btn-primary">Нашата продукция</a>
+            <a href="contact.html" class="btn btn-secondary">Свържете се с нас</a>
+        </div>
+    </section>
+    <section>
+        <div class="container">
+            <div class="welcome fade-in">
+                <img src="https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=600&q=80" alt="Пчелин">
+                <div class="welcome-text">
+                    <h2>Традиция и качество</h2>
+                    <p>Нашето стопанство се намира в екологично чист район на Стара планина, далеч от промишлени замърсявания. Пчелите ни събират нектар от девствени ливади и вековни гори.</p>
+                    <p>Грижим се за всеки кошер с любов и внимание, спазвайки вековни традиции, съчетани със съвременни методи на пчеларство.</p>
+                    <a href="about.html" class="btn btn-primary">Научете повече</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="products-bg">
+        <div class="container">
+            <h2 class="section-title">Избрана продукция</h2>
+            <p class="section-sub">Открийте разнообразието от натурални пчелни продукти, произведени с грижа и отговорност.</p>
+            <div class="products-grid fade-in">
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=400&q=80" alt="Акациев мед">
+                    <div class="product-card-body"><h3>Акациев мед</h3><p>Светъл, нежен и ароматен мед от цветовете на акацията.</p></div>
+                </div>
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?w=400&q=80" alt="Липов мед">
+                    <div class="product-card-body"><h3>Липов мед</h3><p>Ароматен мед с характерен вкус от липовите гори на Балкана.</p></div>
+                </div>
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1471943311424-646960669fbc?w=400&q=80" alt="Полифлорен мед">
+                    <div class="product-card-body"><h3>Полифлорен мед</h3><p>Богат букет от полски цветя, събрани от планинските ливади.</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section style="background: white;">
+        <div class="container">
+            <h2 class="section-title">Защо да изберете нас</h2>
+            <p class="section-sub">Повече от три десетилетия опит, любов към пчелите и уважение към природата.</p>
+            <div class="stats-grid fade-in">
+                <div class="stat-card">
+                    <div class="stat-number">200+</div>
+                    <div class="stat-label">Пчелни семейства</div>
+                    <p>Грижим се за над 200 здрави и силни пчелни семейства.</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">30+</div>
+                    <div class="stat-label">Години опит</div>
+                    <p>Три поколения пчелари предават знанието си.</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Натурален мед</div>
+                    <p>Без добавки, без химикали, без компромиси с качеството.</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">5000+</div>
+                    <div class="stat-label">Доволни клиенти</div>
+                    <p>Хиляди семейства се доверяват на нашия мед.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="container">
+            <h2 class="section-title">Какво казват клиентите</h2>
+            <div class="testimonials fade-in">
+                <div class="testimonial">
+                    <p class="testimonial-text">"Най-вкусният мед, който съм опитвала! Поръчвам редовно от Златен кошер вече 5 години."</p>
+                    <p class="testimonial-author">- Елена, София</p>
+                </div>
+                <div class="testimonial">
+                    <p class="testimonial-text">"Отличен мед и страхотно обслужване. Доставката винаги е бърза и продуктите са перфектно опаковани."</p>
+                    <p class="testimonial-author">- Георги, Пловдив</p>
+                </div>
+                <div class="testimonial">
+                    <p class="testimonial-text">"Прополисът е невероятен! Помага ми всяка зима. Благодаря ви за чудесните продукти."</p>
+                    <p class="testimonial-author">- Мария, Варна</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="cta">
+        <div class="container fade-in">
+            <h2>Опитайте вкуса на природата</h2>
+            <p>Поръчайте директно от производителя и получете най-свежия и качествен мед до вашия дом.</p>
+            <a href="contact.html" class="btn">Направете поръчка</a>
+        </div>
+    </section>
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>Златен кошер</h4>
+                <p>Семейна пчелна ферма от 1992 г. Натурален мед и пчелни продукти от сърцето на България.</p>
+                <div class="social-icons"><span>FB</span><span>IG</span><span>YT</span></div>
+            </div>
+            <div class="footer-col">
+                <h4>Навигация</h4>
+                <a href="index.html">Начало</a><a href="about.html">За стопанството</a>
+                <a href="products.html">Продукция</a><a href="gallery.html">Галерия</a><a href="contact.html">Контакти</a>
+            </div>
+            <div class="footer-col">
+                <h4>Контакти</h4>
+                <p>с. Боженци, общ. Габрово</p><p>Тел: +359 888 123 456</p><p>Email: info@zlatenkosher.bg</p>
+                <p>Работно време: Пон-Съб 8:00-18:00</p>
+            </div>
+        </div>
+        <div class="footer-bottom">&copy; 2026 Пчелна ферма "Златен кошер". Всички права запазени.</div>
+    </footer>
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+        }, { threshold: 0.15 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
